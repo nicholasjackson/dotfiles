@@ -7,7 +7,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 " Languages
 Plugin 'fatih/vim-go'
@@ -19,6 +19,8 @@ Plugin 'dracula/vim'
 
 " Highlight indent
 Plugin 'nathanaelkane/vim-indent-guides'
+
+" Autocomplete
 Plugin 'Shougo/neocomplete.vim'
 
 " NerdTree explorer
@@ -39,6 +41,12 @@ Plugin 'ervandew/supertab'
 " Syntax checking
 Plugin 'scrooloose/syntastic'
 
+" Fix indentation
+Plugin 'tommcdo/vim-lion.git'
+
+" Glutentags ctag autoupdater
+Plugin 'ludovicchabant/vim-gutentags'
+
 call vundle#end() " required
 filetype plugin indent on
 
@@ -56,7 +64,8 @@ syntax on
 color dracula
 
 " Custom key commands
-map <C-p> :CtrlP
+map <C-p> :CtrlP<CR>
+map <C-t> :CtrlPBufTag<CR>
 map <F6> :NERDTreeToggle<CR>
 map <silent> <c-k> :wincmd k<CR>
 map <silent> <c-j> :wincmd j<CR>
@@ -65,7 +74,9 @@ map <silent> <c-l> :wincmd l<CR>
 
 " £Indent guide
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 1
+let g:indent_guides_auto_colors = 0
+hi IndentGuidesOdd  ctermbg=236
+hi IndentGuidesEven ctermbg=235
 
 " Go IDE
 let g:go_highlight_functions = 1
@@ -104,16 +115,18 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'filename' ] ],
+      \             [ 'fugitive', 'filename' ], 
+      \             [ 'gutentags' ] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], 
-      \              ['percent'], 
+      \              [ 'percent' ], 
       \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
       \   'fugitive': 'LightLineFugitive',
       \   'readonly': 'LightLineReadonly',
       \   'modified': 'LightLineModified',
-      \   'filename': 'LightLineFilename'
+      \   'filename': 'LightLineFilename',
+      \   'gutentags': 'LightLineGutentags'
       \ },
       \ 'component_expand': {
       \   'syntastic': 'SyntasticStatuslineFlag',
@@ -161,6 +174,10 @@ function! LightLineFilename()
            \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
+function! LightLineGutentags()
+    return gutentags#statusline("[Generating...]")
+endfunction
+
 " Syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -175,3 +192,13 @@ function! s:syntastic()
     SyntasticCheck
         call lightline#update()
 endfunction
+
+"Ctrl P settings
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }

@@ -82,19 +82,19 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
 
 DEFAULT_USER="nicj"
 export CLICOLOR=1
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
 export GOPATH=~/Developer/go
-export PATH="/usr/local:/bin:/usr/local/go/bin:$PATH"
+export PATH="/usr/local/bin:/bin:/usr/local/go/bin:$PATH"
 
 export PATH="$PATH:$GOPATH/bin:/usr/local/share/dotnet"
 
 export ANDROID_HOME=/Users/nicj/Library/Android/sdk
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
