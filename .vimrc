@@ -13,6 +13,8 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'fatih/vim-go'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'mxw/vim-jsx'
+Plugin 'pangloss/vim-javascript'
 
 " Darcular theme
 Plugin 'dracula/vim'
@@ -184,10 +186,12 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 3
+let g:syntastic_javascript_checkers = ['eslint']
+let g:jsx_ext_required = 0
 
 augroup AutoSyntastic
     autocmd!
-    autocmd BufWritePost *.c,*.cpp,*.rb,*.js,*.yaml,*.yml call s:syntastic()
+    autocmd BufWritePost *.c,*.cpp,*.rb,*.js,*.yaml,*.yml,*.js call s:syntastic()
 augroup END
 function! s:syntastic()
     SyntasticCheck
@@ -197,7 +201,6 @@ endfunction
 "Ctrl P settings
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](git|hg|svn|vendor)$',
   \ 'file': '\v\.(exe|so|dll)$',
@@ -206,3 +209,6 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_max_files=10000
 let g:ctrlp_max_depth=40
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:100'
+
+" React settings
+

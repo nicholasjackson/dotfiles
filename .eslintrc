@@ -1,16 +1,3 @@
-# dotfiles
-Various configuration dotfiles for Vim, etc
-
-## React Requirements
-Install eslint, babel-eslint (for ES6 support), and eslint-plugin-react:
-
-npm install -g eslint
-npm install -g babel-eslint
-npm install -g eslint-plugin-react
-
-Create a config like this in your project's .eslintrc, or do so globally by placing it in ~/.eslintrc:
-
-`
 {
     "parser": "babel-eslint",
     "env": {
@@ -32,4 +19,3 @@ Create a config like this in your project's .eslintrc, or do so globally by plac
         "no-underscore-dangle": 0
     }
 }
-`
