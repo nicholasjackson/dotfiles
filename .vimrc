@@ -55,9 +55,9 @@ filetype plugin indent on
 " Text formatting
 set anti enc=utf-8
 set guifont=Source\ Code\ Pro\ 15
-set sw=4
-set ts=4
-set softtabstop=4
+set sw=2
+set ts=2
+set softtabstop=2
 set expandtab
 set number
 set backspace=2
@@ -88,6 +88,7 @@ let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
+let g:go_def_mapping_enabled = 0
 
 " NEO Complete
 let g:acp_enableAtStartup = 0

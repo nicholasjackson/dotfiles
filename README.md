@@ -1,6 +1,11 @@
 # dotfiles
 Various configuration dotfiles for Vim, etc
 
+## Go Requirements
+1. Install vimgo  and Go
+2. Run `vim -c "GoInstallBinaries" -c "qa"i`
+
+
 ## React Requirements
 Install eslint, babel-eslint (for ES6 support), and eslint-plugin-react:
 
