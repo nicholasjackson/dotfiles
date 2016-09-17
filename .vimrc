@@ -49,6 +49,9 @@ Plugin 'tommcdo/vim-lion.git'
 " Glutentags ctag autoupdater
 Plugin 'ludovicchabant/vim-gutentags'
 
+" Tagbar to view tags in right hand column
+Plugin 'majutsushi/tagbar'
+
 call vundle#end() " required
 filetype plugin indent on
 
@@ -73,6 +76,8 @@ map <silent> <c-k> :wincmd k<CR>
 map <silent> <c-j> :wincmd j<CR>
 map <silent> <c-h> :wincmd h<CR>
 map <silent> <c-l> :wincmd l<CR>
+map <F8> :TagbarToggle<CR>
+
 
 " £Indent guide
 let g:indent_guides_enable_on_vim_startup = 1
