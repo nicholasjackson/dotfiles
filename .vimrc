@@ -194,14 +194,28 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 3
 let g:syntastic_javascript_checkers = ['eslint']
 let g:jsx_ext_required = 0
+let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
+let g:syntastic_ignore_files = ['\.s$']
+
 
 augroup AutoSyntastic
-    autocmd!
-    autocmd BufWritePost *.c,*.cpp,*.rb,*.js,*.yaml,*.yml,*.js call s:syntastic()
+  autocmd!
+  autocmd BufWritePost *.go,*.c,*.cpp,*.rb,*.js,*.yaml,*.yml,*.js call s:syntastic()
 augroup END
 function! s:syntastic()
     SyntasticCheck
         call lightline#update()
+endfunction
+
+"Exit if quickfix is last window
+au BufEnter * call MyLastWindow()
+function MyLastWindow()
+  " if thje window is quickfix go on
+  if $buftype=="quickfix"
+    if winbufnr(2) == -1
+      quit!
+    endif
+  endif
 endfunction
 
 "Ctrl P settings
