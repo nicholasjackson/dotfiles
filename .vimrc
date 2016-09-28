@@ -78,7 +78,6 @@ map <silent> <c-h> :wincmd h<CR>
 map <silent> <c-l> :wincmd l<CR>
 map <F8> :TagbarToggle<CR>
 
-
 " £Indent guide
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0
@@ -101,7 +100,7 @@ let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 "Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#sources#syntax#min_keyword_length = 2
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 "
 " Define dictionary.
@@ -195,6 +194,7 @@ let g:syntastic_loc_list_height = 3
 let g:syntastic_javascript_checkers = ['eslint']
 let g:jsx_ext_required = 0
 let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
+let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 let g:syntastic_ignore_files = ['\.s$']
 
 
@@ -209,7 +209,7 @@ endfunction
 
 "Exit if quickfix is last window
 au BufEnter * call MyLastWindow()
-function MyLastWindow()
+function! MyLastWindow()
   " if thje window is quickfix go on
   if $buftype=="quickfix"
     if winbufnr(2) == -1
