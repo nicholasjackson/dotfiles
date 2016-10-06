@@ -15,6 +15,7 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'mxw/vim-jsx'
 Plugin 'pangloss/vim-javascript'
+Plugin 'bumaociyuan/vim-swift'
 
 " Darcular theme
 Plugin 'dracula/vim'
@@ -64,6 +65,7 @@ set softtabstop=2
 set expandtab
 set number
 set backspace=2
+set colorcolumn=140
 
 syntax on
 color dracula
@@ -77,6 +79,12 @@ map <silent> <c-j> :wincmd j<CR>
 map <silent> <c-h> :wincmd h<CR>
 map <silent> <c-l> :wincmd l<CR>
 map <F8> :TagbarToggle<CR>
+
+" Remap arrow keys
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
 
 " £Indent guide
 let g:indent_guides_enable_on_vim_startup = 1
@@ -231,4 +239,6 @@ let g:ctrlp_max_depth=40
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:100'
 
 " React settings
+
+
 
