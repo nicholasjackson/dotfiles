@@ -45,7 +45,7 @@ Plugin 'ervandew/supertab'
 Plugin 'scrooloose/syntastic'
 
 " Fix indentation
-Plugin 'tommcdo/vim-lion.git'
+Plugin 'junegunn/vim-easy-align'
 
 " Glutentags ctag autoupdater
 Plugin 'ludovicchabant/vim-gutentags'
@@ -71,14 +71,22 @@ syntax on
 color dracula
 
 " Custom key commands
-map <C-p> :CtrlP<CR>
-map <C-t> :CtrlPBufTag<CR>
-map <F6> :NERDTreeToggle<CR>
-map <silent> <c-k> :wincmd k<CR>
-map <silent> <c-j> :wincmd j<CR>
-map <silent> <c-h> :wincmd h<CR>
-map <silent> <c-l> :wincmd l<CR>
-map <F8> :TagbarToggle<CR>
+map <C-p>           : CtrlP<CR>
+map <C-t>           : CtrlPBufTag<CR>
+map <F6>            : NERDTreeToggle<CR>
+map <silent> <c-k>  : wincmd k<CR>
+map <silent> <c-j>  : wincmd j<CR>
+map <silent> <c-h>  : wincmd h<CR>
+map <silent> <c-l>  : wincmd l<CR>
+map <F8>            : TagbarToggle<CR>
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+"
+" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+
 
 " Remap arrow keys
 noremap <Up> <nop>
@@ -88,28 +96,31 @@ noremap <Right> <nop>
 
 " £Indent guide
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd  ctermbg=236
-hi IndentGuidesEven ctermbg=235
+let g:indent_guides_auto_colors           = 0
+hi IndentGuidesOdd  ctermbg               = 236
+hi IndentGuidesEven ctermbg               = 235
 
 " Go IDE
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
+let g:go_highlight_functions         = 1
+let g:go_highlight_methods           = 1
+let g:go_highlight_fields            = 1
+let g:go_highlight_types             = 1
+let g:go_highlight_operators         = 1
 let g:go_highlight_build_constraints = 1
-let g:go_fmt_command = "goimports"
-let g:go_def_mapping_enabled = 0
+let g:go_fmt_command                 = "goimports"
+let g:go_def_mapping_enabled         = 0
 
 " NEO Complete
 let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
+
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
+
 "Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 2
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
 "
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
