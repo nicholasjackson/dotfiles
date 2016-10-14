@@ -54,9 +54,6 @@ Plugin 'xolox/vim-misc'
 " Tagbar to view tags in right hand column
 Plugin 'majutsushi/tagbar'
 
-" Sourcekitten for swift
-Plugin 'keith/sourcekittendaemon.vim'
-
 call vundle#end() " required
 filetype plugin indent on
 
