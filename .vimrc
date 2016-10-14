@@ -15,7 +15,7 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'mxw/vim-jsx'
 Plugin 'pangloss/vim-javascript'
-Plugin 'bumaociyuan/vim-swift'
+Plugin 'keith/swift.vim'
 
 " Darcular theme
 Plugin 'dracula/vim'
@@ -47,11 +47,15 @@ Plugin 'scrooloose/syntastic'
 " Fix indentation
 Plugin 'junegunn/vim-easy-align'
 
-" Glutentags ctag autoupdater
-Plugin 'ludovicchabant/vim-gutentags'
+" CTags generator
+Plugin 'xolox/vim-easytags'
+Plugin 'xolox/vim-misc'
 
 " Tagbar to view tags in right hand column
 Plugin 'majutsushi/tagbar'
+
+" Sourcekitten for swift
+Plugin 'keith/sourcekittendaemon.vim'
 
 call vundle#end() " required
 filetype plugin indent on
@@ -141,8 +145,7 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'filename' ], 
-      \             [ 'gutentags' ] ],
+      \             [ 'fugitive', 'filename' ] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], 
       \              [ 'percent' ], 
       \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
@@ -152,7 +155,6 @@ let g:lightline = {
       \   'readonly': 'LightLineReadonly',
       \   'modified': 'LightLineModified',
       \   'filename': 'LightLineFilename',
-      \   'gutentags': 'LightLineGutentags'
       \ },
       \ 'component_expand': {
       \   'syntastic': 'SyntasticStatuslineFlag',
@@ -200,10 +202,6 @@ function! LightLineFilename()
            \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
-function! LightLineGutentags()
-    return gutentags#statusline("[Generating...]")
-endfunction
-
 " Syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -214,6 +212,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:jsx_ext_required = 0
 let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 let g:syntastic_ignore_files = ['\.s$']
 
 
@@ -249,7 +248,21 @@ let g:ctrlp_max_files=10000
 let g:ctrlp_max_depth=40
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:100'
 
-" React settings
+" Autotags settings
+" Enable async operation
+let g:easytags_async = 1
 
+" Use project specific tags files (fall back to a global)
+let g:easytags_dynamic_files = 1
 
+" Language specific settings
+let g:easytags_languages = {
+\   'go': {
+\     'cmd': 'gotags',
+\       'args': [],
+\       'fileoutput_opt': '-f',
+\       'stdout_opt': '-f -',
+\       'recurse_flag': '-R'
+\   }
+\}
 
