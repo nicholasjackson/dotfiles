@@ -120,6 +120,7 @@ map <leader>pp :setlocal paste!<cr>
 
 map <C-p>           : CtrlP<CR>
 map <C-t>           : CtrlPBufTag<CR>
+map <leader>p       : CtrlPBuffer<CR>
 map <F6>            : NERDTreeToggle<CR>
 map <silent> <c-k>  : wincmd k<CR>
 map <silent> <c-j>  : wincmd j<CR>

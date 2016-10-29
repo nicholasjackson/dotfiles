@@ -82,7 +82,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
 
 DEFAULT_USER="nicj"
 export CLICOLOR=1
