@@ -96,4 +96,9 @@ export ANDROID_HOME=/Users/nicj/Library/Android/sdk
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
+alias bog='cd $GOPATH/src/github.com/nicholasjackson/building-microservices-in-go'
+alias dstart='docker-machine start default'
+alias dstop='docker-machine stop default'
+alias denv='eval $(docker-machine env default)'
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
