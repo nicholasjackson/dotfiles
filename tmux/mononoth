@@ -1,0 +1,18 @@
+#!/bin/bash
+
+tmux has-session -t mononoth
+
+if [ $? != 0 ]; then
+  tmux new-session -s mononoth -n editor -d
+  
+  tmux send-keys -t mononoth 'cd ~/Developer/notonthehighstreet' C-m
+  tmux send-keys -t mononoth 'vim .' C-m
+  
+  tmux new-window -n console -t mononoth
+  tmux send-keys -t mononoth:1 'cd ~/Developer/docker-builds' C-m
+  tmux split-window -h -t mononoth
+
+  tmux select-window -t mononoth:0
+fi
+
+tmux attach -t mononoth
