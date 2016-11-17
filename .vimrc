@@ -57,6 +57,9 @@ Plugin 'janko-m/vim-test'
 " Tagbar to view tags in right hand column
 Plugin 'majutsushi/tagbar'
 
+" Dash
+Plugin 'rizzatti/dash.vim'
+
 call vundle#end() " required
 filetype plugin indent on
 
