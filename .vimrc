@@ -17,6 +17,9 @@ Plugin 'mxw/vim-jsx'
 Plugin 'pangloss/vim-javascript'
 Plugin 'keith/swift.vim'
 Plugin 'jparise/vim-graphql'
+Plugin 'mitsuse/autocomplete-swift'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
 " Darcular theme
 Plugin 'dracula/vim'
@@ -26,6 +29,8 @@ Plugin 'nathanaelkane/vim-indent-guides'
 
 " Autocomplete
 Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'zchee/deoplete-go'
 
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
@@ -60,7 +65,10 @@ Plugin 'majutsushi/tagbar'
 " Dash
 Plugin 'rizzatti/dash.vim'
 
+
 call vundle#end() " required
+
+
 filetype plugin indent on
 
 set nobackup
@@ -94,13 +102,14 @@ set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
 " Text formatting
-set anti enc=utf-8
+"set anti enc=utf-8
 set guifont=Source\ Code\ Pro\ 15
 set sw=2
 set ts=2
 set softtabstop=2
 set expandtab
 set number
+set clipboard=unnamed
 
 " Make sure that coursor is always vertically centered on j/k moves
 set so=999
@@ -121,15 +130,15 @@ map <leader>a :Ack<space>
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 
-map <C-p>           : CtrlP<CR>
-map <C-t>           : CtrlPBufTag<CR>
-map <leader>p       : CtrlPBuffer<CR>
-map <F6>            : NERDTreeToggle<CR>
-map <silent> <c-k>  : wincmd k<CR>
-map <silent> <c-j>  : wincmd j<CR>
-map <silent> <c-h>  : wincmd h<CR>
-map <silent> <c-l>  : wincmd l<CR>
-map <F8>            : TagbarToggle<CR>
+map <C-p>            : CtrlP<CR>
+map <C-t>            : CtrlPBufTag<CR>
+map <leader>p        : CtrlPBuffer<CR>
+map <F6>             : NERDTreeToggle<CR>
+map <F8>             : TagbarToggle<CR>
+map <silent> <c-b>k  : wincmd k<CR>
+map <silent> <c-b>j  : wincmd j<CR>
+map <silent> <c-b>h  : wincmd h<CR>
+map <silent> <c-b>l  : wincmd l<CR>
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -209,7 +218,6 @@ au FileType go nmap <leader>c <Plug>(go-coverage)
 "------------------------------------------------------------------------------
 " NeoComplete
 "------------------------------------------------------------------------------
-
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 
@@ -368,3 +376,7 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:100'
 
 " Vim Test
 let g:test#preserve_screen = 1
+
+if has('nvim')
+  source $HOME/.config/nvim/neovim.vim
+endif

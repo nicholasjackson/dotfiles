@@ -6,7 +6,7 @@ if [ $? != 0 ]; then
   tmux new-session -s mononoth -n editor -d
   
   tmux send-keys -t mononoth 'cd ~/Developer/notonthehighstreet' C-m
-  tmux send-keys -t mononoth 'vim .' C-m
+  tmux send-keys -t mononoth 'nvim .' C-m
   
   tmux new-window -n console -t mononoth
   tmux send-keys -t mononoth:1 'cd ~/Developer/docker-builds' C-m

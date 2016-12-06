@@ -51,9 +51,6 @@ ZSH_THEME="agnoster-nic"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
-# User configuration
-
-export PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -89,16 +86,14 @@ export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
 export GOPATH=~/Developer/go
 export PATH="/usr/local/bin:/bin:/usr/local/go/bin:$PATH"
-
 export PATH="$PATH:$GOPATH/bin:/usr/local/share/dotnet"
-
 export ANDROID_HOME=/Users/nicj/Library/Android/sdk
-
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 alias bog='cd $GOPATH/src/github.com/nicholasjackson/building-microservices-in-go'
 alias dstart='docker-machine start default'
 alias dstop='docker-machine stop default'
 alias denv='eval $(docker-machine env default)'
+alias vim='nvim'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
