@@ -65,6 +65,11 @@ Plugin 'majutsushi/tagbar'
 " Dash
 Plugin 'rizzatti/dash.vim'
 
+" Markdown
+Plugin 'itspriddle/vim-marked'
+
+" Arduino
+Plugin 'coddingtonbear/neomake-platformio'
 
 call vundle#end() " required
 
@@ -135,10 +140,10 @@ map <C-t>            : CtrlPBufTag<CR>
 map <leader>p        : CtrlPBuffer<CR>
 map <F6>             : NERDTreeToggle<CR>
 map <F8>             : TagbarToggle<CR>
-map <silent> <c-b>k  : wincmd k<CR>
-map <silent> <c-b>j  : wincmd j<CR>
-map <silent> <c-b>h  : wincmd h<CR>
-map <silent> <c-b>l  : wincmd l<CR>
+map <silent> <leader>k  : wincmd k<CR>
+map <silent> <leader>j  : wincmd j<CR>
+map <silent> <leader>h  : wincmd h<CR>
+map <silent> <leader>l  : wincmd l<CR>
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -166,7 +171,7 @@ let g:go_highlight_types             = 1
 let g:go_highlight_operators         = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command                 = "goimports"
-let g:go_def_mapping_enabled         = 0
+let g:go_def_mapping_enabled         = 1
 
 let g:tagbar_type_go = {  
     \ 'ctagstype' : 'go',

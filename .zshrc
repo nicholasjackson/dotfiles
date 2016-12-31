@@ -96,4 +96,13 @@ alias dstop='docker-machine stop default'
 alias denv='eval $(docker-machine env default)'
 alias vim='nvim'
 
+GPG_TTY=$(tty)
+export GPG_TTY
+if [ -f "${HOME}/.gpg-agent-info" ]; then
+     . "${HOME}/.gpg-agent-info"
+       export GPG_AGENT_INFO
+       export SSH_AUTH_SOCK
+       export SSH_AGENT_PID
+fi
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
