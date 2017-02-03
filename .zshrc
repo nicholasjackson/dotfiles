@@ -49,7 +49,7 @@ ZSH_THEME="agnoster-nic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git vi-mode)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -89,6 +89,8 @@ export PATH="/usr/local/bin:/bin:/usr/local/go/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin:/usr/local/share/dotnet"
 export ANDROID_HOME=/Users/nicj/Library/Android/sdk
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="$HOME/.cargo/bin:$PATH" # Add Rust
+export PATH="$HOME/.tmux:$PATH" # Add Tmux
 
 alias bog='cd $GOPATH/src/github.com/nicholasjackson/building-microservices-in-go'
 alias dstart='docker-machine start default'

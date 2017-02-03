@@ -16,13 +16,13 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'mxw/vim-jsx'
 Plugin 'pangloss/vim-javascript'
 Plugin 'keith/swift.vim'
-Plugin 'jparise/vim-graphql'
-Plugin 'mitsuse/autocomplete-swift'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'jparise/vim-graphql'
 
 " Darcular theme
 Plugin 'dracula/vim'
+Plugin 'arcticicestudio/nord-vim'
 
 " Highlight indent
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -31,6 +31,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'zchee/deoplete-go'
+Plugin 'mitsuse/autocomplete-swift'
 
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
@@ -52,12 +53,6 @@ Plugin 'scrooloose/syntastic'
 
 " Fix indentation
 Plugin 'junegunn/vim-easy-align'
-
-" Glutentags ctag autoupdater
-"Plugin 'ludovicchabant/vim-gutentags'
-
-" Vim test
-Plugin 'janko-m/vim-test'
 
 " Tagbar to view tags in right hand column
 Plugin 'majutsushi/tagbar'
@@ -123,7 +118,7 @@ set so=999
 set colorcolumn=80,120
 
 syntax on
-color dracula
+colorscheme nord
 
 " Custom key commands
 let mapleader = ","
@@ -135,11 +130,11 @@ map <leader>a :Ack<space>
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 
-map <C-p>            : CtrlP<CR>
-map <C-t>            : CtrlPBufTag<CR>
-map <leader>p        : CtrlPBuffer<CR>
-map <F6>             : NERDTreeToggle<CR>
-map <F8>             : TagbarToggle<CR>
+map <C-p>               : CtrlP<CR>
+map <C-t>               : CtrlPBufTag<CR>
+map <leader>p           : CtrlPBuffer<CR>
+map <F6>                : NERDTreeToggle<CR>
+map <F8>                : TagbarToggle<CR>
 map <silent> <leader>k  : wincmd k<CR>
 map <silent> <leader>j  : wincmd j<CR>
 map <silent> <leader>h  : wincmd h<CR>
@@ -248,7 +243,6 @@ function! s:my_cr_function()
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
@@ -287,7 +281,7 @@ endif
 " lightbar settings
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'filename' ] ],
