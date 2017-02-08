@@ -20,9 +20,10 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jparise/vim-graphql'
 
-" Darcular theme
+" themes
 Plugin 'dracula/vim'
 Plugin 'arcticicestudio/nord-vim'
+Plugin 'albertorestifo/github.vim'
 
 " Highlight indent
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -65,6 +66,9 @@ Plugin 'itspriddle/vim-marked'
 
 " Arduino
 Plugin 'coddingtonbear/neomake-platformio'
+
+" Floobits
+Plugin 'floobits/floobits-neovim'
 
 call vundle#end() " required
 
@@ -154,9 +158,9 @@ nmap ga <Plug>(EasyAlign)
 
 " Indent guide
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors           = 0
-hi IndentGuidesOdd  ctermbg               = 236
-hi IndentGuidesEven ctermbg               = 235
+let g:indent_guides_auto_colors           = 1
+"hi IndentGuidesOdd  ctermbg               = 236
+"hi IndentGuidesEven ctermbg               = 235
 
 " Go IDE
 let g:go_highlight_functions         = 1
@@ -243,8 +247,8 @@ function! s:my_cr_function()
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 
@@ -354,7 +358,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 3
 let g:syntastic_javascript_checkers = ['eslint']
 let g:jsx_ext_required = 0
-let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
+let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet', 'gosimple', 'staticcheck']
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 let g:syntastic_ignore_files = ['\.s$']
