@@ -123,39 +123,6 @@ set colorcolumn=80,120
 
 syntax on
 colorscheme nord
-
-" Custom key commands
-let mapleader = ","
-let g:mapleader = ","
-
-" Open Ack and put the cursor in the right position
-map <leader>a :Ack<space>
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
-
-map <C-p>               : CtrlP<CR>
-map <C-t>               : CtrlPBufTag<CR>
-map <leader>p           : CtrlPBuffer<CR>
-map <F6>                : NERDTreeToggle<CR>
-map <F8>                : TagbarToggle<CR>
-map <silent> <leader>k  : wincmd k<CR>
-map <silent> <leader>j  : wincmd j<CR>
-map <silent> <leader>h  : wincmd h<CR>
-map <silent> <leader>l  : wincmd l<CR>
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-"
-" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" Remap arrow keys
-"noremap <Up> <nop>
-"noremap <Down> <nop>
-"noremap <Left> <nop>
-"noremap <Right> <nop>
-
 " Indent guide
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors           = 1
@@ -247,7 +214,6 @@ function! s:my_cr_function()
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
@@ -383,3 +349,36 @@ let g:test#preserve_screen = 1
 if has('nvim')
   source $HOME/.config/nvim/neovim.vim
 endif
+
+" Custom key commands
+let mapleader = ","
+let g:mapleader = ","
+
+" Open Ack and put the cursor in the right position
+map <leader>a :Ack<space>
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
+map <C-p>           : CtrlP<CR>
+map <C-t>           : CtrlPBufTag<CR>
+map <leader>p       : CtrlPBuffer<CR>
+map <F6>            : NERDTreeToggle<CR>
+map <F8>            : TagbarToggle<CR>
+map <silent> <C-k>  : wincmd k<CR>
+map <silent> <C-j>  : wincmd j<CR>
+nmap <silent> <C-h>  : wincmd h<CR>
+map <silent> <C-l>  : wincmd l<CR>
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+"
+" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Remap arrow keys
+"noremap <Up> <nop>
+"noremap <Down> <nop>
+"noremap <Left> <nop>
+"noremap <Right> <nop>
+
