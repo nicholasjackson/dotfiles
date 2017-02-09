@@ -2,7 +2,7 @@
 let g:neocomplete#enable_at_startup = 0
 
 " Path to python interpreter for neovim
-let g:python3_host_prog  = '/usr/local/bin/python3'
+let g:python3_host_prog  = '/usr/bin/python3'
 " Skip the check of neovim module
 let g:python3_host_skip_check = 0
 

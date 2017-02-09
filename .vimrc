@@ -113,7 +113,7 @@ set ts=2
 set softtabstop=2
 set expandtab
 set number
-set clipboard=unnamed
+"set clipboard=unnamed
 
 " Make sure that coursor is always vertically centered on j/k moves
 set so=999
@@ -324,7 +324,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 3
 let g:syntastic_javascript_checkers = ['eslint']
 let g:jsx_ext_required = 0
-let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet', 'gosimple', 'staticcheck']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck', 'gosimple', 'staticcheck']
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 let g:syntastic_ignore_files = ['\.s$']
@@ -345,11 +345,6 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:100'
 
 " Vim Test
 let g:test#preserve_screen = 1
-
-if has('nvim')
-  source $HOME/.config/nvim/neovim.vim
-endif
-
 " Custom key commands
 let mapleader = ","
 let g:mapleader = ","
@@ -382,3 +377,9 @@ nmap ga <Plug>(EasyAlign)
 "noremap <Left> <nop>
 "noremap <Right> <nop>
 
+" Markdown settings
+let g:vim_markdown_folding_disabled = 1
+
+if has('nvim')
+  source $HOME/.config/nvim/neovim.vim
+endif
