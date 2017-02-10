@@ -382,3 +382,5 @@ nmap ga <Plug>(EasyAlign)
 "noremap <Left> <nop>
 "noremap <Right> <nop>
 
+" Markdown settings
+let g:vim_markdown_folding_disabled = 1
