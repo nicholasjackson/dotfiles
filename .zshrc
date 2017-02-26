@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/root/.oh-my-zsh
+export ZSH=/home/ubuntu/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -92,27 +92,11 @@ DEFAULT_USER="nicj"
 export CLICOLOR=1
 #export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
-export GOPATH=~/Developer/go
+export GOPATH=/home/ubuntu/dev/go
 export PATH="/usr/local/bin:/bin:/usr/local/go/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin:/usr/local/share/dotnet"
-export ANDROID_HOME=/Users/nicj/Library/Android/sdk
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH="$HOME/.cargo/bin:$PATH" # Add Rust
-export PATH="$HOME/.tmux:$PATH" # Add Tmux
 
-alias bog='cd $GOPATH/src/github.com/nicholasjackson/building-microservices-in-go'
-alias dstart='docker-machine start default'
-alias dstop='docker-machine stop default'
-alias denv='eval $(docker-machine env default)'
 alias vim='nvim'
-
-GPG_TTY=$(tty)
-export GPG_TTY
-if [ -f "${HOME}/.gpg-agent-info" ]; then
-     . "${HOME}/.gpg-agent-info"
-       export GPG_AGENT_INFO
-       export SSH_AUTH_SOCK
-       export SSH_AGENT_PID
-fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
