@@ -1,117 +1,106 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/nicj/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
+function prompt_aws() {
+  [[ -n "${AWS_DEFAULT_PROFILE}" ]] && prompt_segment $BULLETTRAIN_CUSTOM_BG $BULLETTRAIN_CUSTOM_FG "AWS: ${AWS_DEFAULT_PROFILE}"
+}
+
 ZSH_THEME="bullet-train"
 BULLETTRAIN_DIR_EXTENDED=0
 BULLETTRAIN_PROMPT_ORDER=(
   git
   context
   dir
-  go
   time
 )
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+function pet-select() {
+  BUFFER=$(pet search --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle redisplay
+}
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+function prev() {
+  PREV=$(fc -lrn | head -n 1)
+  sh -c "pet new `printf %q "$PREV"`"
+}
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+function ssh_pinentry() {
+  gpg-connect-agent updatestartuptty /bye > /dev/null;
+  ssh $@;
+}
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+function git_pinentry() {
+  gpg-connect-agent updatestartuptty /bye > /dev/null;
+  git $@;
+}
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode)
-
-# export MANPATH="/usr/local/man:$MANPATH"
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 DEFAULT_USER="nicj"
 export CLICOLOR=1
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
 export GOPATH=~/Developer/go
+export GOBIN=~/Developer/go/bin
+
 export PATH="/usr/local/bin:/bin:/usr/local/go/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin:/usr/local/share/dotnet"
-export ANDROID_HOME=/Users/nicj/Library/Android/sdk
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH="$HOME/.cargo/bin:$PATH" # Add Rust
 export PATH="$HOME/.tmux:$PATH" # Add Tmux
+export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+export PATH="/usr/local/apache-maven-3.3.9/bin:$PATH" # Add MAVEN to PATH for scripting
+export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
+export PATH=$PATH:/Users/nicj/.cargo/bin
 
-alias bog='cd $GOPATH/src/github.com/nicholasjackson/building-microservices-in-go'
-alias dstart='docker-machine start default'
-alias dstop='docker-machine stop default'
-alias denv='eval $(docker-machine env default)'
+export EDITOR="nvim"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home"
+export AWS_DEFAULT_PROFILE=default
+
 alias vim='nvim'
+alias ctags="/usr/local/bin/ctags"
+alias restart_gpg='killall gpg-agent && gpg-agent --daemon'
+alias start_gpg='gpg-agent --daemon'
+alias ssh='ssh_pinentry'
+alias git='git_pinentry'
+alias switch_key='gpg2 --delete-secret-key F441E5E4 && gpg2 --card-status'
+alias faas='faas-cli'
+
+# Azure CLI
+export PATH=$PATH:/Users/nicj/bin
 
 GPG_TTY=$(tty)
 export GPG_TTY
-if [ -f "${HOME}/.gpg-agent-info" ]; then
-     . "${HOME}/.gpg-agent-info"
-       export GPG_AGENT_INFO
-       export SSH_AUTH_SOCK
-       export SSH_AGENT_PID
-fi
+export SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(direnv hook zsh)"
+
+# added by travis gem
+[ -f /Users/nicj/.travis/travis.sh ] && source /Users/nicj/.travis/travis.sh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/nicj/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/nicj/google-cloud-sdk/path.zsh.inc'; fi
+
+setopt noflowcontrol
+setopt noincappendhistory
+setopt nosharehistory
+setopt histexpiredupsfirst # Expire duplicate entries first when trimming history.
+setopt histignoredups      # Don't record an entry that was just recorded again.
+setopt histignorealldups   # Delete old recorded entry if new entry is a duplicate.
+setopt histfindnodups      # Do not display a line previously found.
+setopt histignorespace     # Don't record an entry starting with a space.
+setopt histsavenodups      # Don't write duplicate entries in the history file.
+setopt ignoreeof           # Don't exit shell on ctrl D
+
+# NOMAD AUTH
+export NOMAD_TOKEN=ce7f0c75-c452-674b-be37-9802bd13ee7c
+
+zle -N pet-select
+stty -ixon
+bindkey '^s' pet-select
+
+autoload -U +X bashcompinit && bashcompinit
+complete -C /usr/local/bin/nomad nomad

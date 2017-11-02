@@ -2,7 +2,7 @@ set nocompatible              " be improved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.config/nvim/bundle/Vundle.vim
 
 call vundle#begin()
 
@@ -19,9 +19,10 @@ Plugin 'keith/swift.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jparise/vim-graphql'
+Plugin 'rust-lang/rust.vim'
+Plugin 'hashivim/vim-hashicorp-tools'
 
 " themes
-Plugin 'dracula/vim'
 Plugin 'arcticicestudio/nord-vim'
 Plugin 'albertorestifo/github.vim'
 
@@ -33,6 +34,7 @@ Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'zchee/deoplete-go'
 Plugin 'mitsuse/autocomplete-swift'
+Plugin 'sebastianmarkow/deoplete-rust'
 
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
@@ -50,7 +52,8 @@ Plugin 'tpope/vim-fugitive.git'
 Plugin 'ervandew/supertab'
 
 " Syntax checking
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
+Plugin 'w0rp/ale'
 
 " Fix indentation
 Plugin 'junegunn/vim-easy-align'
@@ -64,14 +67,7 @@ Plugin 'rizzatti/dash.vim'
 " Markdown
 Plugin 'itspriddle/vim-marked'
 
-" Arduino
-Plugin 'coddingtonbear/neomake-platformio'
-
-" Floobits
-Plugin 'floobits/floobits-neovim'
-
 call vundle#end() " required
-
 
 filetype plugin indent on
 
@@ -124,12 +120,12 @@ set colorcolumn=80,120
 syntax on
 colorscheme nord
 " Indent guide
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors           = 1
+let g:indent_guides_enable_on__startup = 1
+let g:indent_guides_auto_colors        = 1
 "hi IndentGuidesOdd  ctermbg               = 236
 "hi IndentGuidesEven ctermbg               = 235
 
-" Go IDE
+" -------   Go IDE -----------------------------
 let g:go_highlight_functions         = 1
 let g:go_highlight_methods           = 1
 let g:go_highlight_fields            = 1
@@ -138,6 +134,25 @@ let g:go_highlight_operators         = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command                 = "goimports"
 let g:go_def_mapping_enabled         = 1
+
+" Show a list of interfaces which is implemented by the type under your cursor
+au FileType go nmap <Leader>s <Plug>(go-implements)
+
+" Show type info for the word under your cursor
+au FileType go nmap <Leader>i <Plug>(go-info)
+
+" Open the relevant Godoc for the word under the cursor
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+
+" Open the Godoc in browser
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+
+" Run/build/test/coverage
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
 
 let g:tagbar_type_go = {  
     \ 'ctagstype' : 'go',
@@ -166,25 +181,6 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
-
-" Show a list of interfaces which is implemented by the type under your cursor
-au FileType go nmap <Leader>s <Plug>(go-implements)
-
-" Show type info for the word under your cursor
-au FileType go nmap <Leader>i <Plug>(go-info)
-
-" Open the relevant Godoc for the word under the cursor
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-
-" Open the Godoc in browser
-au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-
-" Run/build/test/coverage
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
 
 "------------------------------------------------------------------------------
 " NeoComplete
@@ -248,15 +244,16 @@ else
     set wildignore+=.git\*,.hg\*,.svn\*
 endif
 
-" lightbar settings
+" ------------------------ lightbar settings ---------------------------
 set laststatus=2
 let g:lightline = {
       \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'filename' ] ],
-      \   'right': [ [ 'syntastic', 'lineinfo' ],
+      \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ], 
+      \              [ 'linter_warnings', 'linter_errors', 'linter_ok' ],
       \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
@@ -264,13 +261,16 @@ let g:lightline = {
       \   'readonly': 'LightLineReadonly',
       \   'modified': 'LightLineModified',
       \   'filename': 'LightLineFilename',
-      \   'gutentags': 'LightLineGutentags',
       \ },
       \ 'component_expand': {
-      \   'syntastic': 'SyntasticStatuslineFlag',
+      \   'linter_warnings': 'LightlineLinterWarnings',
+      \   'linter_errors': 'LightlineLinterErrors',
+      \   'linter_ok': 'LightlineLinterOK'
       \ },
       \ 'component_type': {
-      \   'syntastic': 'error',
+      \   'linter_warnings': 'warning',
+      \   'linter_errors': 'error',
+      \   'linter_ok': 'ok',
       \ },
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' }
@@ -312,43 +312,88 @@ function! LightLineFilename()
            \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
-function! LightLineGutentags()
-  return gutentags#statusline("[Generating...]")
+autocmd User ALELint call lightline#update()
+
+" ale + lightline
+function! LightlineLinterWarnings() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d --', all_non_errors)
+endfunction
+
+function! LightlineLinterErrors() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d >>', all_errors)
+endfunction
+
+function! LightlineLinterOK() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '✓' : ''
 endfunction
 
 " Syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height = 3
-let g:syntastic_javascript_checkers = ['eslint']
-let g:jsx_ext_required = 0
-let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck', 'gosimple', 'staticcheck']
-let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
-let g:syntastic_ignore_files = ['\.s$']
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_loc_list_height = 3
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:jsx_ext_required = 0
+" let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck', 'gosimple', 'staticcheck']
+" let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+" let g:tastic_swift_checkers = ['swiftpm', 'swiftlint']
+" let g:syntastic_ignore_files = ['\.s$']
 
-augroup AutoSyntastic
-  autocmd!
-  autocmd BufWritePost *.swift,*.go,*.c,*.cpp,*.rb,*.js,*.yaml,*.yml,*.js call s:syntastic()
-augroup END
-function! s:syntastic()
-  SyntasticCheck
-    call lightline#update()
-endfunction
+"augroup AutoSyntastic
+"  autocmd!
+"  autocmd BufWritePost *.swift,*.go,*.c,*.cpp,*.rb,*.js,*.yaml,*.yml,*.js call s:syntastic()
+"augroup END
+"function! s:syntastic()
+"  SyntasticCheck
+"    call lightline#update()
+"endfunction
 
-"Ctrl P settings
-let g:ctrlp_max_files=10000
-let g:ctrlp_max_depth=40
+" ======================== ale ========================
+let g:ale_linters = {
+  \ 'html': [],
+  \ 'javascript': ['eslint'],
+  \ 'go': ['gometalinter']
+  \ }
+
+let g:ale_go_gometalinter_options = '
+  \ --aggregate
+  \ --fast
+  \ --sort=line
+  \ --vendor
+  \ --vendored-linters
+  \ --disable=gas
+  \ --disable=goconst
+  \ --disable=gocyclo
+  \ '
+let g:ale_set_highlights = 0
+let g:ale_set_signs = 1
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_warn_about_trailing_whitespace = 0
+let g:ale_set_quickfix = 1
+let g:ale_open_list = 1
+hi ALEErrorSign   ctermfg=15 ctermbg=236
+hi ALEInfoSign    ctermfg=15 ctermbg=236
+hi ALEWarningSign ctermfg=15 ctermbg=236
+
+" ================  Ctrl P settings ===========================
+let g:ctrlp_max_files    = 10000
+let g:ctrlp_max_depth    = 40
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:100'
 
 " Vim Test
 let g:test#preserve_screen = 1
-
-if has('nvim')
-  source $HOME/.config/nvim/neovim.vim
-endif
 
 " Custom key commands
 let mapleader = ","
@@ -367,8 +412,8 @@ map <F6>            : NERDTreeToggle<CR>
 map <F8>            : TagbarToggle<CR>
 map <silent> <C-k>  : wincmd k<CR>
 map <silent> <C-j>  : wincmd j<CR>
-nmap <silent> <C-h>  : wincmd h<CR>
 map <silent> <C-l>  : wincmd l<CR>
+nmap <silent> <C-h> : wincmd h<CR>
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -377,10 +422,33 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Remap arrow keys
-"noremap <Up> <nop>
-"noremap <Down> <nop>
-"noremap <Left> <nop>
-"noremap <Right> <nop>
+noremap <Up>    <nop>
+noremap <Down>  <nop>
+noremap <Left>  <nop>
+noremap <Right> <nop>
 
 " Markdown settings
-let g:vim_markdown_folding_disabled = 1
+let g:_markdown_folding_disabled = 1
+
+" Rust
+let g:deoplete#sources#rust#racer_binary='/Users/nicj/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path='/uslocal/Cellar/rust/1.20.0/lib/rustlib/src/rust/src'
+
+" Terraform
+let g:terraform_fmt_on_save = 1
+
+" Disableneocomplete.
+let g:neocomplete#enable_at_startup = 0
+
+" Path to python interpreter for neovim
+let g:python3_host_prog  = '/usr/local/bin/python3'
+
+" Skip the check of neovim module
+let g:python3_host_skip_check = 0
+
+" Run deoplete.nvim automatically
+let g:deoplete#enable_at_startup        = 1
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
+
+nmap <BS> <C-W>h

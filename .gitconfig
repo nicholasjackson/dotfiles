@@ -1,0 +1,9 @@
+[user]
+  name = Nic Jackson
+  email = jackson.nic@gmail.com
+  signingkey = F441E5E4
+
+[commit]
+  gpgsign = true
+[core]
+	excludesfile = /Users/nicj/.gitignore_global
