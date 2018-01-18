@@ -20,7 +20,11 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jparise/vim-graphql'
 Plugin 'rust-lang/rust.vim'
-Plugin 'hashivim/vim-hashicorp-tools'
+Plugin 'git@github.com:hashicorp/sentinel.vim.git'
+
+" Terraform
+Plugin 'hashivim/vim-terraform'
+Plugin 'juliosueiras/vim-terraform-completion'
 
 " themes
 Plugin 'arcticicestudio/nord-vim'
@@ -28,6 +32,12 @@ Plugin 'albertorestifo/github.vim'
 
 " Highlight indent
 Plugin 'nathanaelkane/vim-indent-guides'
+
+" Neomake
+Plugin 'neomake/neomake'
+
+" Gists
+Plugin 'lambdalisue/vim-gista'
 
 " Autocomplete
 Plugin 'Shougo/neocomplete.vim'
@@ -47,13 +57,14 @@ Plugin 'mileszs/ack.vim'
 
 " Git
 Plugin 'tpope/vim-fugitive.git'
+Plugin 'tpope/vim-git.git'
 
 " Super tab
 Plugin 'ervandew/supertab'
 
 " Syntax checking
-"Plugin 'scrooloose/syntastic'
-Plugin 'w0rp/ale'
+Plugin 'vim-syntastic/syntastic'
+"Plugin 'w0rp/ale'
 
 " Fix indentation
 Plugin 'junegunn/vim-easy-align'
@@ -122,8 +133,8 @@ colorscheme nord
 " Indent guide
 let g:indent_guides_enable_on__startup = 1
 let g:indent_guides_auto_colors        = 1
-"hi IndentGuidesOdd  ctermbg               = 236
-"hi IndentGuidesEven ctermbg               = 235
+hi IndentGuidesOdd  ctermbg               = 236
+hi IndentGuidesEven ctermbg               = 235
 
 " -------   Go IDE -----------------------------
 let g:go_highlight_functions         = 1
@@ -134,6 +145,37 @@ let g:go_highlight_operators         = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command                 = "goimports"
 let g:go_def_mapping_enabled         = 1
+let g:go_auto_type_info              = 1
+let g:go_term_enabled                = 1
+"let g:go_list_type                   = "quickfix"
+
+" gometalinter configuration
+let g:syntastic_go_checkers = ['go', 'golint', 'govet']
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_always_populate_loc_list = 1
+
+let g:go_metalinter_command = ""
+let g:go_metalinter_deadline = "20s"
+"let g:go_metalinter_enabled = [
+"    \ 'deadcode',
+"    \ 'errcheck',
+"    \ 'gas',
+"    \ 'goconst',
+"    \ 'gocyclo',
+"    \ 'golint',
+"    \ 'gosimple',
+"    \ 'ineffassign',
+"    \ 'vet',
+"    \ 'vetshadow'
+"    \]
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['gotype', 'vet', 'golint']
+
+" wrap long lines in quickfix
+augroup quickfix
+    autocmd!
+    autocmd FileType qf setlocal wrap
+augroup END
 
 " Show a list of interfaces which is implemented by the type under your cursor
 au FileType go nmap <Leader>s <Plug>(go-implements)
@@ -213,6 +255,7 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
+inoremap <silent><TAB><TAB> <C-x><C-o>
 
 " AutoComplPop like behavior.
 let g:neocomplete#enable_auto_select = 1
@@ -231,8 +274,12 @@ if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
+let g:neocomplete#force_omni_input_patterns.terraform = '[^ *\t"{=$]\w*'
 
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:deoplete#omni_patterns = {}
+let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
+
+"le:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
@@ -337,55 +384,50 @@ function! LightlineLinterOK() abort
 endfunction
 
 " Syntastic
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_loc_list_height = 3
-" let g:syntastic_javascript_checkers = ['eslint']
-" let g:jsx_ext_required = 0
-" let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck', 'gosimple', 'staticcheck']
-" let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-" let g:tastic_swift_checkers = ['swiftpm', 'swiftlint']
-" let g:syntastic_ignore_files = ['\.s$']
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_loc_list_height = 3
+"let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck', 'gosimple', 'staticcheck']
+"let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+"let g:tastic_swift_checkers = ['swiftpm', 'swiftlint']
+"let g:syntastic_ignore_files = ['\.s$']
 
-"augroup AutoSyntastic
-"  autocmd!
-"  autocmd BufWritePost *.swift,*.go,*.c,*.cpp,*.rb,*.js,*.yaml,*.yml,*.js call s:syntastic()
-"augroup END
-"function! s:syntastic()
-"  SyntasticCheck
-"    call lightline#update()
-"endfunction
+function! s:syntastic()
+  SyntasticCheck
+    call lightline#update()
+endfunction
 
 " ======================== ale ========================
-let g:ale_linters = {
-  \ 'html': [],
-  \ 'javascript': ['eslint'],
-  \ 'go': ['gometalinter']
-  \ }
-
-let g:ale_go_gometalinter_options = '
-  \ --aggregate
-  \ --fast
-  \ --sort=line
-  \ --vendor
-  \ --vendored-linters
-  \ --disable=gas
-  \ --disable=goconst
-  \ --disable=gocyclo
-  \ '
-let g:ale_set_highlights = 0
-let g:ale_set_signs = 1
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⚠'
-let g:ale_warn_about_trailing_whitespace = 0
-let g:ale_set_quickfix = 1
-let g:ale_open_list = 1
-hi ALEErrorSign   ctermfg=15 ctermbg=236
-hi ALEInfoSign    ctermfg=15 ctermbg=236
-hi ALEWarningSign ctermfg=15 ctermbg=236
+"let g:ale_linters = {
+"  \ 'html': [],
+"  \ 'javascript': ['eslint'],
+"  \ 'go': ['gometalinter']
+"  \ }
+"
+"let g:ale_go_gometalinter_options = '
+"  \ --aggregate
+"  \ --fast
+"  \ --sort=line
+"  \ --vendor
+"  \ --vendored-linters
+"  \ --disable=gas
+"  \ --disable=goconst
+"  \ --disable=gocyclo
+"  \ '
+"let g:ale_set_highlights = 0
+"let g:ale_set_signs = 1
+"let g:ale_sign_column_always = 1
+"let g:ale_sign_error = '✖'
+"let g:ale_sign_warning = '⚠'
+"let g:ale_warn_about_trailing_whitespace = 0
+"let g:ale_set_quickfix = 1
+"let g:ale_open_list = 1
+"hi ALEErrorSign   ctermfg=15 ctermbg=236
+"hi ALEInfoSign    ctermfg=15 ctermbg=236
+"hi ALEWarningSign ctermfg=15 ctermbg=236
 
 " ================  Ctrl P settings ===========================
 let g:ctrlp_max_files    = 10000
@@ -437,6 +479,14 @@ let g:deoplete#sources#rust#rust_source_path='/uslocal/Cellar/rust/1.20.0/lib/ru
 " Terraform
 let g:terraform_fmt_on_save = 1
 
+augroup filetypedetect
+  au BufRead,BufNewFile *.hcl set filetype=terraform
+augroup END
+
+augroup filetypedetect
+  au BufRead,BufNewFile *.nomad set filetype=terraform
+augroup END
+
 " Disableneocomplete.
 let g:neocomplete#enable_at_startup = 0
 
@@ -451,4 +501,23 @@ let g:deoplete#enable_at_startup        = 1
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
 
+" React
+let g:jsx_ext_required = 0
+
+" Javascript
+let g:syntastic_javascript_checkers = ['jslint', 'jshint']
+
+" Markdown
+let g:vim_markdown_folding_disabled = 1
+
 nmap <BS> <C-W>h
+
+" Spelling
+autocmd BufRead,BufNewFile *.md setlocal spell
+
+" Gitsta
+let g:gista#client#default_username = 'nicholasjackson'
+
+" Terraform
+let g:syntastic_terraform_tffilter_plan = 1
+let g:terraform_completion_keys = 1
