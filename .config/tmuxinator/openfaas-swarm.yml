@@ -1,0 +1,14 @@
+# ~/.tmuxinator/openfaas-gateway.yml
+
+name: openfaas-swarm
+root: ~/Developer/go/src/github.com/openfaas/faas-swarm
+
+windows:
+  - editor:
+      panes:
+        - nvim .
+  - terminal:
+      layout: even-horizontal
+      panes:
+        - zsh:
+        - zsh:

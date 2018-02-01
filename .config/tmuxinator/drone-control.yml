@@ -1,0 +1,14 @@
+# ~/.tmuxinator/drone-control.yml
+
+name: drone-control
+root: ~/Developer/go/src/github.com/nicholasjackson/drone-control
+
+windows:
+  - editor:
+      panes:
+        - nvim .
+  - terminal:
+      layout: even-horizontal
+      panes:
+        - zsh:
+        - zsh:

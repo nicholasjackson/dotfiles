@@ -1,0 +1,26 @@
+# ~/.tmuxinator/pi-cluster.yml
+
+name: pi-cluster
+root: ~/Developer/terraform/pi-cluster
+
+windows:
+  - shell:
+      layout: tiled
+      # Synchronize all panes of this window, can be enabled before or after the pane commands run.
+      # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
+      # synchronize: after
+      panes:
+        - pi00:
+          - ssh -A pi@pi00.local.demo.gs
+        - pi01:
+          - ssh -A pi@pi01.local.demo.gs
+        - pi02:
+          - ssh -A pi@pi02.local.demo.gs
+        - pi03:
+          - ssh -A pi@pi03.local.demo.gs
+  - editor:
+      layout: even-horizontal
+      panes:
+        - nvim:
+          - nvim .
+        - zsh:

@@ -1,0 +1,14 @@
+# ~/.tmuxinator/openfaas-functions.yml
+
+name: openfaas-functions
+root: ~/Developer/go/src/github.com/nicholasjackson/open-faas-functions
+
+windows:
+  - editor:
+      panes:
+        - nvim .
+  - terminal:
+      layout: even-horizontal
+      panes:
+        - zsh:
+        - zsh:

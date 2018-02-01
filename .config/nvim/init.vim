@@ -145,7 +145,7 @@ let g:go_highlight_operators         = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command                 = "goimports"
 let g:go_def_mapping_enabled         = 1
-let g:go_auto_type_info              = 1
+let g:go_auto_type_info              = 0
 let g:go_term_enabled                = 1
 "let g:go_list_type                   = "quickfix"
 
@@ -230,59 +230,18 @@ let g:tagbar_type_go = {
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
+set timeoutlen=400 ttimeoutlen=0
 
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-set timeoutlen=200 ttimeoutlen=0
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-"inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
-inoremap <silent><TAB><TAB> <C-x><C-o>
-
-" AutoComplPop like behavior.
-let g:neocomplete#enable_auto_select = 1
+" Deoplete
+"
+let g:deoplete#enable_at_startup        = 1
+let g:deoplete#omni_patterns = {}
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
-" Enable heavy omni completion.
-"if !exists('g:neocomplete#sources#omni#input_patterns')
-"  let g:neocomplete#sources#omni#input_patterns = {}
-"endif
-"let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
-let g:neocomplete#force_omni_input_patterns.terraform = '[^ *\t"{=$]\w*'
-
-let g:deoplete#omni_patterns = {}
-let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-
-"le:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
@@ -384,51 +343,10 @@ function! LightlineLinterOK() abort
   return l:counts.total == 0 ? '✓' : ''
 endfunction
 
-" Syntastic
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_loc_list_height = 3
-"let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck', 'gosimple', 'staticcheck']
-"let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-"let g:tastic_swift_checkers = ['swiftpm', 'swiftlint']
-"let g:syntastic_ignore_files = ['\.s$']
-
 function! s:syntastic()
   SyntasticCheck
     call lightline#update()
 endfunction
-
-" ======================== ale ========================
-"let g:ale_linters = {
-"  \ 'html': [],
-"  \ 'javascript': ['eslint'],
-"  \ 'go': ['gometalinter']
-"  \ }
-"
-"let g:ale_go_gometalinter_options = '
-"  \ --aggregate
-"  \ --fast
-"  \ --sort=line
-"  \ --vendor
-"  \ --vendored-linters
-"  \ --disable=gas
-"  \ --disable=goconst
-"  \ --disable=gocyclo
-"  \ '
-"let g:ale_set_highlights = 0
-"let g:ale_set_signs = 1
-"let g:ale_sign_column_always = 1
-"let g:ale_sign_error = '✖'
-"let g:ale_sign_warning = '⚠'
-"let g:ale_warn_about_trailing_whitespace = 0
-"let g:ale_set_quickfix = 1
-"let g:ale_open_list = 1
-"hi ALEErrorSign   ctermfg=15 ctermbg=236
-"hi ALEInfoSign    ctermfg=15 ctermbg=236
-"hi ALEWarningSign ctermfg=15 ctermbg=236
 
 " ================  Ctrl P settings ===========================
 let g:ctrlp_max_files    = 10000
@@ -480,16 +398,14 @@ let g:deoplete#sources#rust#rust_source_path='/uslocal/Cellar/rust/1.20.0/lib/ru
 " Terraform
 let g:terraform_fmt_on_save = 1
 
-augroup filetypedetect
-  au BufRead,BufNewFile *.hcl set filetype=terraform
-augroup END
+"augroup filetypedetect
+"  au BufRead,BufNewFile *.hcl set filetype=terraform
+"augroup END
 
-augroup filetypedetect
-  au BufRead,BufNewFile *.nomad set filetype=terraform
-augroup END
+"augroup filetypedetect
+"  au BufRead,BufNewFile *.nomad set filetype=terraform
+"augroup END
 
-" Disableneocomplete.
-let g:neocomplete#enable_at_startup = 0
 
 " Path to python interpreter for neovim
 let g:python3_host_prog  = '/usr/local/bin/python3'
@@ -498,7 +414,6 @@ let g:python3_host_prog  = '/usr/local/bin/python3'
 let g:python3_host_skip_check = 0
 
 " Run deoplete.nvim automatically
-let g:deoplete#enable_at_startup        = 1
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
 
@@ -521,4 +436,5 @@ let g:gista#client#default_username = 'nicholasjackson'
 
 " Terraform
 let g:syntastic_terraform_tffilter_plan = 1
-let g:terraform_completion_keys = 1
+let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
+let g:terraform_completion_keys = 0

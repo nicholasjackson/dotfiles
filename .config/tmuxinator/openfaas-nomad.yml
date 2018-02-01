@@ -1,0 +1,14 @@
+# ~/.tmuxinator/openfaas-gateway.yml
+
+name: openfaas-nomadd
+root: ~/Developer/go/src/github.com/hashicorp/faas-nomad
+
+windows:
+  - editor:
+      panes:
+        - nvim .
+  - terminal:
+      layout: even-horizontal
+      panes:
+        - zsh:
+        - zsh:

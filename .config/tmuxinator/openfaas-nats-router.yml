@@ -1,0 +1,14 @@
+# ~/.tmuxinator/openfaas-nats-router.yml
+
+name: openfaas-nats-router
+root: ~/Developer/go/src/github.com/nicholasjackson/faas-nats
+
+windows:
+  - editor:
+      panes:
+        - nvim .
+  - terminal:
+      layout: even-horizontal
+      panes:
+        - zsh:
+        - zsh:
