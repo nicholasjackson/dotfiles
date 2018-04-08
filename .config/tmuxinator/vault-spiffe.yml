@@ -1,7 +1,7 @@
-# ~/.tmuxinator/openfaas-nats-router.yml
+# ~/.tmuxinator/vault-spiffe.yml
 
-name: openfaas-nats-router
-root: ~/Developer/go/src/github.com/nicholasjackson/faas-nats
+name: vault-spiffe
+root: ~/Developer/go/src/github.com/hashicorp/vault-plugin-spiffe-auth
 
 windows:
   - editor:

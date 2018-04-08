@@ -1,0 +1,14 @@
+# ~/.tmuxinator/vault
+
+name: vault
+root: ~/Developer/go/src/github.com/hashicorp/vault
+
+windows:
+  - editor:
+      panes:
+        - nvim .
+  - terminal:
+      layout: even-horizontal
+      panes:
+        - zsh:
+        - zsh:

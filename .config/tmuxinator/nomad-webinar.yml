@@ -1,0 +1,13 @@
+---
+name: nomad-webinar
+project_root: "/Users/nicj/Developer/go/src/github.com/nicholasjackson/nomad-multi-cloud"
+windows:
+- nvim:
+    layout: d69d,284x88,0,0,0
+    panes:
+    - cd /Users/nicj/Developer/go/src/github.com/nicholasjackson/nomad-multi-cloud
+- zsh:
+    layout: 1ca3,284x88,0,0{142x88,0,0,1,141x88,143,0,3}
+    panes:
+    - cd /Users/nicj/Developer/go/src/github.com/nicholasjackson/nomad-multi-cloud
+    - cd /Users/nicj/Developer/go/src/github.com/nicholasjackson/nomad-multi-cloud

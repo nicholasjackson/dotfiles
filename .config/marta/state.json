@@ -1,0 +1,87 @@
+{
+  "window" : {
+    "height" : 811,
+    "isFullScreen" : false,
+    "x" : 727,
+    "y" : 252,
+    "width" : 1416
+  },
+  "pane" : {
+    "left" : {
+      "showHiddenFiles" : false,
+      "isAscending" : true,
+      "path" : "\/Users\/nicj\/Developer\/Hashicorp\/training",
+      "recentDirectories" : [
+        "\/Users\/nicj\/Developer\/Hashicorp\/training",
+        "\/Users\/nicj\/Developer\/go\/src\/github.com\/acroca\/go-symbols",
+        "\/Users\/nicj\/Developer\/go\/src\/github.com\/acroca",
+        "\/Users\/nicj\/Developer\/go\/src\/github.com",
+        "\/Users\/nicj\/Developer\/go\/src",
+        "\/Users\/nicj\/Developer\/go",
+        "\/Users\/nicj\/Developer",
+        "\/Users\/nicj\/Library\/Application Support",
+        "\/Users\/nicj\/Library\/Application Support\/Loopback",
+        "\/Users\/nicj\/Library\/Application Support\/Microsoft AutoUpdate",
+        "\/Users\/nicj\/Developer\/sentinel",
+        "\/Users\/nicj\/Developer\/rust",
+        "\/Users\/nicj\/Library\/Application Support\/org.yanex.marta",
+        "\/Volumes\/kitty-0.8.4",
+        "\/Users\/nicj\/Downloads",
+        "\/Users\/nicj\/dotfiles\/.config",
+        "\/Users\/nicj\/dotfiles\/.config\/pet",
+        "\/Users\/nicj\/dotfiles\/.config\/nvim",
+        "\/Users\/nicj\/dotfiles\/.config\/nvim\/bundle",
+        "\/Users\/nicj\/dotfiles\/.config\/nvim\/bundle\/Vundle.vim"
+      ],
+      "sortingColumn" : "name",
+      "displayMode" : "table",
+      "columns" : "extension:67,size:99,modified:168"
+    },
+    "separator" : 50,
+    "right" : {
+      "showHiddenFiles" : true,
+      "isAscending" : true,
+      "path" : "\/Users\/nicj\/Developer\/Hashicorp\/training",
+      "recentDirectories" : [
+        "\/Users\/nicj\/Developer\/Hashicorp\/training",
+        "\/Users\/nicj\/Developer\/go\/src\/gocv.io",
+        "\/Users\/nicj\/Developer\/go\/src\/github.com",
+        "\/Users\/nicj\/Library\/Application Support",
+        "\/Users\/nicj\/Library\/Application Support\/Microsoft AutoUpdate",
+        "\/Users\/nicj\/Library\/Application Support\/org.yanex.marta",
+        "\/Users\/nicj\/Library\/Application Support\/org.yanex.marta\/Plugins",
+        "\/Volumes",
+        "\/Volumes\/kitty-0.8.4\/kitty.app",
+        "\/Applications",
+        "\/Users\/nicj\/dotfiles\/.config\/nvim\/bundle\/Vundle.vim\/autoload",
+        "\/Users\/nicj\/dotfiles\/.config\/nvim\/bundle\/Vundle.vim",
+        "\/Users\/nicj",
+        "\/Users\/nicj\/dotfiles",
+        "\/Users\/nicj\/dotfiles\/iterm",
+        "\/Users\/nicj\/dotfiles\/.config",
+        "\/Users\/nicj\/dotfiles\/.config\/pet",
+        "\/Users\/nicj\/dotfiles\/.config\/nvim",
+        "\/Users\/nicj\/dotfiles\/.config\/nvim\/bundle",
+        "\/Users\/nicj\/Documents\/Adobe"
+      ],
+      "sortingColumn" : "name",
+      "displayMode" : "table",
+      "columns" : "extension:72,size:70,modified:132"
+    }
+  },
+  "meta" : {
+    "first.launch" : false
+  },
+  "tabs" : {
+    "left" : [
+      "left"
+    ],
+    "right" : [
+      "right"
+    ]
+  },
+  "actionsPanel" : {
+    "actionName" : "core.toggle.show.hidden.files",
+    "text" : "show"
+  }
+}

@@ -20,7 +20,8 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jparise/vim-graphql'
 Plugin 'rust-lang/rust.vim'
-Plugin 'git@github.com:hashicorp/sentinel.vim.git'
+Plugin 'hashicorp/sentinel.vim'
+Plugin 'dart-lang/dart-vim-plugin'
 
 " Terraform
 Plugin 'hashivim/vim-terraform'
@@ -45,6 +46,7 @@ Plugin 'Shougo/deoplete.nvim'
 Plugin 'zchee/deoplete-go'
 Plugin 'mitsuse/autocomplete-swift'
 Plugin 'sebastianmarkow/deoplete-rust'
+Plugin 'villainy/deoplete-dart'
 
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
@@ -114,7 +116,7 @@ set whichwrap+=<,>,h,l
 
 " Text formatting
 "set anti enc=utf-8
-set guifont=Source\ Code\ Pro\ 15
+set guifont=Hack
 set sw=2
 set ts=2
 set softtabstop=2
@@ -147,7 +149,8 @@ let g:go_fmt_command                 = "goimports"
 let g:go_def_mapping_enabled         = 1
 let g:go_auto_type_info              = 0
 let g:go_term_enabled                = 1
-"let g:go_list_type                   = "quickfix"
+let g:go_info_mode                   = 'guru'
+let g:go_gocode_autobuild            = 1
 
 " gometalinter configuration
 let g:syntastic_go_checkers = ['go', 'golint', 'govet']
@@ -395,6 +398,9 @@ let g:_markdown_folding_disabled = 1
 let g:deoplete#sources#rust#racer_binary='/Users/nicj/.cargo/bin/racer'
 let g:deoplete#sources#rust#rust_source_path='/uslocal/Cellar/rust/1.20.0/lib/rustlib/src/rust/src'
 
+" Dart
+let g:deoplete#sources#dart#dart_sdk_path='/Users/nicj/dart-sdk/'
+
 " Terraform
 let g:terraform_fmt_on_save = 1
 
@@ -409,7 +415,7 @@ let g:terraform_fmt_on_save = 1
 
 " Path to python interpreter for neovim
 let g:python3_host_prog  = '/usr/local/bin/python3'
-
+let g:python_host_prog  = '/usr/local/bin/python2'
 " Skip the check of neovim module
 let g:python3_host_skip_check = 0
 
@@ -421,7 +427,7 @@ let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'co
 let g:jsx_ext_required = 0
 
 " Javascript
-let g:syntastic_javascript_checkers = ['jslint', 'jshint']
+let g:syntastic_javascript_checkers = ['eslint', 'jshint']
 
 " Markdown
 let g:vim_markdown_folding_disabled = 1
@@ -438,3 +444,7 @@ let g:gista#client#default_username = 'nicholasjackson'
 let g:syntastic_terraform_tffilter_plan = 1
 let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
 let g:terraform_completion_keys = 0
+let g:terraform_registry_module_completion = 0
+
+" HCL
+au BufRead,BufNewFile *.hcl setlocal filetype=terraform
