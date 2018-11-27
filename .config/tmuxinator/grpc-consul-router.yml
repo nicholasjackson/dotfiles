@@ -1,7 +1,7 @@
-# ~/.tmuxinator/drone-control.yml
+# ~/.tmuxinator/grpc-consul-resolver
 
-name: drone-control
-root: ~/Developer/go/src/github.com/selfidrone/control
+name: grpc-consul-resolver
+root: ~/Developer/go/src/github.com/nicholasjackson/grpc-consul-resolver
 
 windows:
   - editor:

@@ -1,7 +1,7 @@
-# ~/.tmuxinator/drone-control.yml
+# ~/.tmuxinator/drone-web-api.yml
 
-name: drone-control
-root: ~/Developer/go/src/github.com/selfidrone/control
+name: drone-web-api
+root: ~/Developer/go/src/github.com/selfidrone/api
 
 windows:
   - editor:

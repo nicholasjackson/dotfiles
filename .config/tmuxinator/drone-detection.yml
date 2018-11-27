@@ -1,7 +1,7 @@
-# ~/.tmuxinator/drone-control.yml
+# ~/.tmuxinator/drone-face-detection.yml
 
-name: drone-control
-root: ~/Developer/go/src/github.com/selfidrone/control
+name: drone-face-detection
+root: ~/Developer/go/src/github.com/selfidrone/detection
 
 windows:
   - editor:

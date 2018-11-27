@@ -1,7 +1,7 @@
-# ~/.tmuxinator/drone-control.yml
+# ~/.tmuxinator/drone-messages.yml
 
-name: drone-control
-root: ~/Developer/go/src/github.com/selfidrone/control
+name: drone-messages
+root: ~/Developer/go/src/github.com/selfidrone/messages
 
 windows:
   - editor:

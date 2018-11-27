@@ -1,7 +1,7 @@
-# ~/.tmuxinator/drone-control.yml
+# ~/.tmuxinator/periph-rpi-simulator
 
-name: drone-control
-root: ~/Developer/go/src/github.com/selfidrone/control
+name: periph-gpi-simulator
+root: ~/Developer/go/src/github.com/nicholasjackson/periph-gpio-simulator
 
 windows:
   - editor:

@@ -1,7 +1,7 @@
-# ~/.tmuxinator/drone-control.yml
+# ~/.tmuxinator/drone-twitter.yml
 
-name: drone-control
-root: ~/Developer/go/src/github.com/selfidrone/control
+name: drone-twitter
+root: /Users/nicj/Developer/go/src/github.com/selfidrone/twitter
 
 windows:
   - editor:

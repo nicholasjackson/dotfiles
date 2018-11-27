@@ -1,7 +1,7 @@
-# ~/.tmuxinator/drone-control.yml
+# ~/.tmuxinator/drone-autopilot.yml
 
-name: drone-control
-root: ~/Developer/go/src/github.com/selfidrone/control
+name: drone-autopilot
+root: /Users/nicj/Developer/go/src/github.com/selfidrone/autopilot
 
 windows:
   - editor:

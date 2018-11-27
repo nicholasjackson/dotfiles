@@ -1,7 +1,7 @@
-# ~/.tmuxinator/drone-control.yml
+# ~/.tmuxinator/emojify-emojify
 
-name: drone-control
-root: ~/Developer/go/src/github.com/selfidrone/control
+name: emojify-emojify
+root: ~/Developer/go/src/github.com/emojify-app/emojify
 
 windows:
   - editor:

@@ -1,7 +1,7 @@
-# ~/.tmuxinator/drone-control.yml
+# ~/.tmuxinator/acetio-api-users
 
-name: drone-control
-root: ~/Developer/go/src/github.com/selfidrone/control
+name: api-users
+root: ~/Developer/go/src/github.com/acetio/api-users
 
 windows:
   - editor:

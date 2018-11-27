@@ -22,6 +22,7 @@ Plugin 'jparise/vim-graphql'
 Plugin 'rust-lang/rust.vim'
 Plugin 'hashicorp/sentinel.vim'
 Plugin 'dart-lang/dart-vim-plugin'
+"Plugin 'erikzaadi/vim-ansible-yaml'
 
 " Terraform
 Plugin 'hashivim/vim-terraform'
@@ -80,6 +81,9 @@ Plugin 'rizzatti/dash.vim'
 " Markdown
 Plugin 'itspriddle/vim-marked'
 
+" Utility
+Plugin 'vim-scripts/SyntaxAttr.vim'
+
 call vundle#end() " required
 
 filetype plugin indent on
@@ -135,8 +139,8 @@ colorscheme nord
 " Indent guide
 let g:indent_guides_enable_on__startup = 1
 let g:indent_guides_auto_colors        = 1
-hi IndentGuidesOdd  ctermbg               = 236
-hi IndentGuidesEven ctermbg               = 235
+hi IndentGuidesOdd  ctermbg            = 236
+hi IndentGuidesEven ctermbg            = 235
 
 " -------   Go IDE -----------------------------
 let g:go_highlight_functions         = 1
@@ -151,15 +155,11 @@ let g:go_auto_type_info              = 0
 let g:go_term_enabled                = 1
 let g:go_info_mode                   = 'guru'
 let g:go_gocode_autobuild            = 1
+let go_gocode_propose_source         = 0
 
 " gometalinter configuration
-let g:syntastic_go_checkers = ['go', 'golint', 'govet']
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
-
-let g:go_metalinter_command = ""
 let g:go_metalinter_deadline = "20s"
-"let g:go_metalinter_enabled = [
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 "    \ 'deadcode',
 "    \ 'errcheck',
 "    \ 'gas',
@@ -172,7 +172,7 @@ let g:go_metalinter_deadline = "20s"
 "    \ 'vetshadow'
 "    \]
 let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['gotype', 'vet', 'golint']
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 
 " wrap long lines in quickfix
 augroup quickfix
@@ -237,7 +237,7 @@ set timeoutlen=400 ttimeoutlen=0
 
 " Deoplete
 "
-let g:deoplete#enable_at_startup        = 1
+let g:deoplete#enable_at_startup = 1
 let g:deoplete#omni_patterns = {}
 
 " Enable omni completion.
@@ -378,6 +378,7 @@ map <silent> <C-k>  : wincmd k<CR>
 map <silent> <C-j>  : wincmd j<CR>
 map <silent> <C-l>  : wincmd l<CR>
 nmap <silent> <C-h> : wincmd h<CR>
+map -a	            : call SyntaxAttr()<CR>
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -402,7 +403,6 @@ let g:deoplete#sources#rust#rust_source_path='/uslocal/Cellar/rust/1.20.0/lib/ru
 let g:deoplete#sources#dart#dart_sdk_path='/Users/nicj/dart-sdk/'
 
 " Terraform
-let g:terraform_fmt_on_save = 1
 
 "augroup filetypedetect
 "  au BufRead,BufNewFile *.hcl set filetype=terraform
@@ -429,6 +429,9 @@ let g:jsx_ext_required = 0
 " Javascript
 let g:syntastic_javascript_checkers = ['eslint', 'jshint']
 
+" YAML
+let g:syntastic_yaml_checkers = ['yamllint']
+
 " Markdown
 let g:vim_markdown_folding_disabled = 1
 
@@ -443,8 +446,21 @@ let g:gista#client#default_username = 'nicholasjackson'
 " Terraform
 let g:syntastic_terraform_tffilter_plan = 1
 let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
+let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
 let g:terraform_completion_keys = 0
 let g:terraform_registry_module_completion = 0
+let g:terraform_fmt_on_save = 1
 
 " HCL
 au BufRead,BufNewFile *.hcl setlocal filetype=terraform
+
+" Ansible
+au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+
+" Swift
+autocmd BufNewFile,BufRead *.swift set filetype=swift
+let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
+
+hi Comment ctermfg=Grey
+
+call deoplete#initialize()
