@@ -69,7 +69,7 @@ export PATH=$PATH:/Users/nicj/bin
 
 GPG_TTY=$(tty)
 export GPG_TTY
-export SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh
+export SSH_AUTH_SOCK=/run/user/$UID/gnupg/S.gpg-agent.ssh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
