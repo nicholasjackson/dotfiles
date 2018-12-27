@@ -1,9 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/nicj/.oh-my-zsh
-
-function prompt_aws() {
-  [[ -n "${AWS_DEFAULT_PROFILE}" ]] && prompt_segment $BULLETTRAIN_CUSTOM_BG $BULLETTRAIN_CUSTOM_FG "AWS: ${AWS_DEFAULT_PROFILE}"
-}
+export ZSH=/home/jacksonnic/.oh-my-zsh
 
 ZSH_THEME="bullet-train"
 BULLETTRAIN_DIR_EXTENDED=0
@@ -39,7 +35,7 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-DEFAULT_USER="nicj"
+DEFAULT_USER="jacksonnic@penguin"
 export CLICOLOR=1
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
@@ -66,6 +62,7 @@ alias ssh='ssh_pinentry'
 alias git='git_pinentry'
 alias switch_key='gpg2 --delete-secret-key F441E5E4 && gpg2 --card-status'
 alias faas='faas-cli'
+alias mux='tmuxinator'
 
 # Azure CLI
 export PATH=$PATH:/Users/nicj/bin
@@ -104,3 +101,5 @@ bindkey '^s' pet-select
 
 autoload -U +X bashcompinit && bashcompinit
 complete -C /usr/local/bin/nomad nomad
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 

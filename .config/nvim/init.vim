@@ -15,14 +15,11 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'mxw/vim-jsx'
 Plugin 'pangloss/vim-javascript'
-Plugin 'keith/swift.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jparise/vim-graphql'
 Plugin 'rust-lang/rust.vim'
 Plugin 'hashicorp/sentinel.vim'
-Plugin 'dart-lang/dart-vim-plugin'
-"Plugin 'erikzaadi/vim-ansible-yaml'
 
 " Terraform
 Plugin 'hashivim/vim-terraform'
@@ -45,9 +42,7 @@ Plugin 'lambdalisue/vim-gista'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'zchee/deoplete-go'
-Plugin 'mitsuse/autocomplete-swift'
 Plugin 'sebastianmarkow/deoplete-rust'
-Plugin 'villainy/deoplete-dart'
 
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
@@ -67,16 +62,12 @@ Plugin 'ervandew/supertab'
 
 " Syntax checking
 Plugin 'vim-syntastic/syntastic'
-"Plugin 'w0rp/ale'
 
 " Fix indentation
 Plugin 'junegunn/vim-easy-align'
 
 " Tagbar to view tags in right hand column
 Plugin 'majutsushi/tagbar'
-
-" Dash
-Plugin 'rizzatti/dash.vim'
 
 " Markdown
 Plugin 'itspriddle/vim-marked'
@@ -128,7 +119,7 @@ set expandtab
 set number
 set clipboard=unnamed
 
-" Make sure that coursor is always vertically centered on j/k moves
+" Make sure that cursor is always vertically centered on j/k moves
 set so=999
 
 " add vertical lines on columns
@@ -136,6 +127,7 @@ set colorcolumn=80,120
 
 syntax on
 colorscheme nord
+
 " Indent guide
 let g:indent_guides_enable_on__startup = 1
 let g:indent_guides_auto_colors        = 1
@@ -156,8 +148,6 @@ let g:go_term_enabled                = 1
 let g:go_info_mode                   = 'guru'
 let g:go_gocode_autobuild            = 1
 let go_gocode_propose_source         = 0
-
-" gometalinter configuration
 let g:go_metalinter_deadline = "20s"
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 "    \ 'deadcode',
@@ -414,8 +404,8 @@ let g:deoplete#sources#dart#dart_sdk_path='/Users/nicj/dart-sdk/'
 
 
 " Path to python interpreter for neovim
-let g:python3_host_prog  = '/usr/local/bin/python3'
-let g:python_host_prog  = '/usr/local/bin/python2'
+let g:python3_host_prog  = '/usr/bin/python3'
+let g:python_host_prog  = '/usr/bin/python2'
 " Skip the check of neovim module
 let g:python3_host_skip_check = 0
 

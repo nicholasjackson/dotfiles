@@ -1,7 +1,7 @@
-# ~/.tmuxinator/emojify-frontend
+# ~/.tmuxinator/bgo
 
-name: emojify-frontend
-root: ~/Developer/go/src/github.com/emojify-app/frontend
+name: bgo
+root: ~/Developer/go/src/github.com/building-microservices-with-go
 
 windows:
   - editor:
