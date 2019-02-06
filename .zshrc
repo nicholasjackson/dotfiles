@@ -51,7 +51,7 @@ export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PA
 export PATH=$PATH:/Users/nicj/.cargo/bin
 
 export EDITOR="nvim"
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home"
+export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 export AWS_DEFAULT_PROFILE=default
 
 alias vim='nvim'
