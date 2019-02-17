@@ -1,7 +1,7 @@
 # ~/.tmuxinator/emojify-stack
 
 name: emojify-stack
-root: ~/Developer/go/src/github.com/emojify-app/stack
+root: ~/developer/go/src/github.com/emojify-app/stack
 
 windows:
   - editor:

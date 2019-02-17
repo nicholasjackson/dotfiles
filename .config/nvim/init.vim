@@ -7,17 +7,14 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+
 Plugin 'ctrlpvim/ctrlp.vim'
 
 " Languages
 Plugin 'fatih/vim-go'
 Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'mxw/vim-jsx'
-Plugin 'pangloss/vim-javascript'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'jparise/vim-graphql'
 Plugin 'rust-lang/rust.vim'
 Plugin 'hashicorp/sentinel.vim'
 
@@ -38,11 +35,7 @@ Plugin 'neomake/neomake'
 " Gists
 Plugin 'lambdalisue/vim-gista'
 
-" Autocomplete
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'zchee/deoplete-go'
-Plugin 'sebastianmarkow/deoplete-rust'
+Plugin 'neoclide/coc.nvim'
 
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
@@ -117,7 +110,10 @@ set ts=2
 set softtabstop=2
 set expandtab
 set number
-set clipboard=unnamed
+set clipboard=unnamedplus
+
+" Supertab start at top
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " Make sure that cursor is always vertically centered on j/k moves
 set so=999
@@ -169,26 +165,26 @@ augroup quickfix
     autocmd!
     autocmd FileType qf setlocal wrap
 augroup END
-
-" Show a list of interfaces which is implemented by the type under your cursor
-au FileType go nmap <Leader>s <Plug>(go-implements)
-
-" Show type info for the word under your cursor
+" 
+" " Show a list of interfaces which is implemented by the type under your cursor
+" au FileType go nmap <Leader>s <Plug>(go-implements)
+" 
+" " Show type info for the word under your cursor
 au FileType go nmap <Leader>i <Plug>(go-info)
-
-" Open the relevant Godoc for the word under the cursor
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-
-" Open the Godoc in browser
-au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-
-" Run/build/test/coverage
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-
+" 
+" " Open the relevant Godoc for the word under the cursor
+" au FileType go nmap <Leader>gd <Plug>(go-doc)
+" au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+" 
+" " Open the Godoc in browser
+" au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+" 
+" " Run/build/test/coverage
+" au FileType go nmap <leader>r <Plug>(go-run)
+" au FileType go nmap <leader>b <Plug>(go-build)
+" au FileType go nmap <leader>t <Plug>(go-test)
+" au FileType go nmap <leader>c <Plug>(go-coverage)
+" 
 let g:tagbar_type_go = {  
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -217,23 +213,10 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-"------------------------------------------------------------------------------
-" NeoComplete
-"------------------------------------------------------------------------------
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-
-set timeoutlen=400 ttimeoutlen=0
-
-" Deoplete
-"
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#omni_patterns = {}
-
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
 
 " Ignore compiled files
@@ -243,6 +226,7 @@ if has("win16") || has("win32")
 else
     set wildignore+=.git\*,.hg\*,.svn\*
 endif
+
 
 " ------------------------ lightbar settings ---------------------------
 set laststatus=2
@@ -312,30 +296,6 @@ function! LightLineFilename()
            \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
-autocmd User ALELint call lightline#update()
-
-" ale + lightline
-function! LightlineLinterWarnings() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d --', all_non_errors)
-endfunction
-
-function! LightlineLinterErrors() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d >>', all_errors)
-endfunction
-
-function! LightlineLinterOK() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '✓' : ''
-endfunction
-
 function! s:syntastic()
   SyntasticCheck
     call lightline#update()
@@ -385,15 +345,7 @@ noremap <Right> <nop>
 " Markdown settings
 let g:_markdown_folding_disabled = 1
 
-" Rust
-let g:deoplete#sources#rust#racer_binary='/Users/nicj/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path='/uslocal/Cellar/rust/1.20.0/lib/rustlib/src/rust/src'
-
-" Dart
-let g:deoplete#sources#dart#dart_sdk_path='/Users/nicj/dart-sdk/'
-
 " Terraform
-
 "augroup filetypedetect
 "  au BufRead,BufNewFile *.hcl set filetype=terraform
 "augroup END
@@ -408,13 +360,6 @@ let g:python3_host_prog  = '/usr/bin/python3'
 let g:python_host_prog  = '/usr/bin/python2'
 " Skip the check of neovim module
 let g:python3_host_skip_check = 0
-
-" Run deoplete.nvim automatically
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
-
-" React
-let g:jsx_ext_required = 0
 
 " Javascript
 let g:syntastic_javascript_checkers = ['eslint', 'jshint']
@@ -435,8 +380,6 @@ let g:gista#client#default_username = 'nicholasjackson'
 
 " Terraform
 let g:syntastic_terraform_tffilter_plan = 1
-let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
 let g:terraform_completion_keys = 0
 let g:terraform_registry_module_completion = 0
 let g:terraform_fmt_on_save = 1
@@ -447,10 +390,4 @@ au BufRead,BufNewFile *.hcl setlocal filetype=terraform
 " Ansible
 au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
 
-" Swift
-autocmd BufNewFile,BufRead *.swift set filetype=swift
-let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
-
 hi Comment ctermfg=Grey
-
-call deoplete#initialize()

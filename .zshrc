@@ -31,7 +31,10 @@ function git_pinentry() {
   git $@;
 }
 
-plugins=(git)
+plugins=(
+  git
+  vi-mode
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -39,19 +42,17 @@ DEFAULT_USER="jacksonnic@penguin"
 export CLICOLOR=1
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
-export GOPATH=~/Developer/go
-export GOBIN=~/Developer/go/bin
+export GOPATH=~/developer/go
+export GOBIN=~/developer/go/bin
 
 export PATH="/usr/local/bin:/bin:/usr/local/go/bin:$PATH"
-export PATH="$PATH:$GOPATH/bin:/usr/local/share/dotnet"
 export PATH="$HOME/.tmux:$PATH" # Add Tmux
 export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
-export PATH="/usr/local/apache-maven-3.3.9/bin:$PATH" # Add MAVEN to PATH for scripting
-export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
-export PATH=$PATH:/Users/nicj/.cargo/bin
+export PATH="$HOME/.tfenv/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH" # Add Rust
+export PATH="$GOBIN:$PATH"
 
 export EDITOR="nvim"
-export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 export AWS_DEFAULT_PROFILE=default
 
 alias vim='nvim'
@@ -61,11 +62,7 @@ alias start_gpg='gpg-agent --daemon'
 alias ssh='ssh_pinentry'
 alias git='git_pinentry'
 alias switch_key='gpg2 --delete-secret-key F441E5E4 && gpg2 --card-status'
-alias faas='faas-cli'
 alias mux='tmuxinator'
-
-# Azure CLI
-export PATH=$PATH:/Users/nicj/bin
 
 GPG_TTY=$(tty)
 export GPG_TTY
@@ -91,9 +88,6 @@ setopt histfindnodups      # Do not display a line previously found.
 setopt histignorespace     # Don't record an entry starting with a space.
 setopt histsavenodups      # Don't write duplicate entries in the history file.
 setopt ignoreeof           # Don't exit shell on ctrl D
-
-# NOMAD AUTH
-export NOMAD_TOKEN=ce7f0c75-c452-674b-be37-9802bd13ee7c
 
 zle -N pet-select
 stty -ixon

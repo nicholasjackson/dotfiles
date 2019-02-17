@@ -1,7 +1,7 @@
 # ~/.tmuxinator/emojify-api
 ---
 name: emojify-api
-root: ~/Developer/go/src/github.com/emojify-app/api
+root: ~/developer/go/src/github.com/emojify-app/api
 
 windows:
   - editor:
