@@ -1,5 +1,5 @@
 [General]
-  snippetfile = "/Users/nicj/.config/pet/snippet.toml"
+  snippetfile = "/home/jacksonnic/.config/pet/snippet.toml"
   editor = "nvim"
   column = 40
   selectcmd = "fzf-tmux -d 30% --ansi --height=30%"

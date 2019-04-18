@@ -1,7 +1,7 @@
-# ~/.tmuxinator/emojify-emojify
+# ~/.tmuxinator/emojify-favorites
 
-name: emojify-emojify
-root: ~/developer/go/src/github.com/emojify-app/emojify
+name: emojify-favorites
+root: ~/developer/go/src/github.com/emojify-app/vulnerable-favorites
 
 windows:
   - editor:

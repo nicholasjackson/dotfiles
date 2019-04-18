@@ -50,7 +50,8 @@ export PATH="$HOME/.tmux:$PATH" # Add Tmux
 export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
 export PATH="$HOME/.tfenv/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH" # Add Rust
-export PATH="$GOBIN:$PATH"
+export PATH="$GOBIN:$PATH" # Add Golang
+export PATH="$HOME/.yarn/bin:$PATH"
 
 export EDITOR="nvim"
 export AWS_DEFAULT_PROFILE=default

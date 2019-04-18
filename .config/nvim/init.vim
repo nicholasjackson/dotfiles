@@ -35,8 +35,6 @@ Plugin 'neomake/neomake'
 " Gists
 Plugin 'lambdalisue/vim-gista'
 
-Plugin 'neoclide/coc.nvim'
-
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
 
@@ -89,6 +87,8 @@ set cursorline
 
 " Completion options (select longest + show menu even if a single match is found)
 set completeopt=longest,menuone
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+let g:SuperTabDefaultCompletionType = "context"
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
@@ -111,9 +111,6 @@ set softtabstop=2
 set expandtab
 set number
 set clipboard=unnamedplus
-
-" Supertab start at top
-let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " Make sure that cursor is always vertically centered on j/k moves
 set so=999
@@ -146,6 +143,7 @@ let g:go_gocode_autobuild            = 1
 let go_gocode_propose_source         = 0
 let g:go_metalinter_deadline = "20s"
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_def_mode = "gopls"
 "    \ 'deadcode',
 "    \ 'errcheck',
 "    \ 'gas',
@@ -313,6 +311,11 @@ let g:test#preserve_screen = 1
 let mapleader = ","
 let g:mapleader = ","
 
+" Change colorscheme for vim diff
+if &diff
+    colorscheme koehler 
+endif
+
 " Open Ack and put the cursor in the right position
 map <leader>a :Ack<space>
 
@@ -389,5 +392,11 @@ au BufRead,BufNewFile *.hcl setlocal filetype=terraform
 
 " Ansible
 au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+
+" coc Language server
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 hi Comment ctermfg=Grey
