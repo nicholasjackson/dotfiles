@@ -1,7 +1,7 @@
-# ~/.tmuxinator/emojify-emojify
+# ~/.tmuxinator/emojify-face-detection
 
-name: emojify-emojify
-root: ~/developer/go/src/github.com/emojify-app/emojify
+name: emojify-face-detection
+root: ~/developer/go/src/github.com/emojify-app/face-detection
 
 windows:
   - editor:

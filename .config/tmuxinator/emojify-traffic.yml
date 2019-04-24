@@ -1,7 +1,7 @@
-# ~/.tmuxinator/emojify-emojify
+# ~/.tmuxinator/emojify-traffic
 
-name: emojify-emojify
-root: ~/developer/go/src/github.com/emojify-app/emojify
+name: emojify-traffic
+root: ~/developer/go/src/github.com/emojify-app/traffic-simulation
 
 windows:
   - editor:

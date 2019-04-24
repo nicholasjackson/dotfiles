@@ -35,8 +35,6 @@ Plugin 'neomake/neomake'
 " Gists
 Plugin 'lambdalisue/vim-gista'
 
-Plugin 'neoclide/coc.nvim'
-
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
 
@@ -113,7 +111,7 @@ set number
 set clipboard=unnamedplus
 
 " Supertab start at top
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = "context"
 
 " Make sure that cursor is always vertically centered on j/k moves
 set so=999
@@ -137,15 +135,18 @@ let g:go_highlight_fields            = 1
 let g:go_highlight_types             = 1
 let g:go_highlight_operators         = 1
 let g:go_highlight_build_constraints = 1
-let g:go_fmt_command                 = "goimports"
 let g:go_def_mapping_enabled         = 1
 let g:go_auto_type_info              = 0
 let g:go_term_enabled                = 1
-let g:go_info_mode                   = 'guru'
 let g:go_gocode_autobuild            = 1
 let go_gocode_propose_source         = 0
+let g:go_def_mode = "gopls"
+let g:go_fmt_command = "goimports"
+let g:go_info_mode = "gopls"
 let g:go_metalinter_deadline = "20s"
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 "    \ 'deadcode',
 "    \ 'errcheck',
 "    \ 'gas',
@@ -157,8 +158,6 @@ let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 "    \ 'vet',
 "    \ 'vetshadow'
 "    \]
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 
 " wrap long lines in quickfix
 augroup quickfix
@@ -313,6 +312,11 @@ let g:test#preserve_screen = 1
 let mapleader = ","
 let g:mapleader = ","
 
+" Change colorscheme for vim diff
+if &diff
+    colorscheme koehler 
+endif
+
 " Open Ack and put the cursor in the right position
 map <leader>a :Ack<space>
 
@@ -389,5 +393,11 @@ au BufRead,BufNewFile *.hcl setlocal filetype=terraform
 
 " Ansible
 au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+
+" coc Language server
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 hi Comment ctermfg=Grey
