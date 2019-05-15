@@ -1,0 +1,14 @@
+# ~/.tmuxinator/vault-in-action
+---
+name: vault-in-action
+root: ~/developer/go/src/github.com/vault-in-action
+
+windows:
+  - editor:
+      panes:
+        - nvim .
+  - terminal:
+      layout: even-horizontal
+      panes:
+        - zsh:
+        - zsh: vault server -dev -dev-root-token-id=root

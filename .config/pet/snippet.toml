@@ -7,11 +7,21 @@
 [[snippets]]
   description = "Git tag and push"
   command = "git tag <tag> && git push origin <tag>"
-  output = ""
   tag = ["git"]
+  output = ""
 
 [[snippets]]
   description = "Git delete tag and remote"
   command = "git tag -d <tag> && git push -d origin <tag>"
-  output = ""
   tag = ["git"]
+  output = ""
+
+[[snippets]]
+  description = "FFMPEG generate pallete"
+  command = "ffmpeg -y -i <filename> -vf palettegen palette.png"
+  output = ""
+
+[[snippets]]
+  description = "FFMPEG create animated gif"
+  command = "ffmpeg -y -i <filename> -i palette.png -filter_complex paletteuse -r <frames_per_s> <output>"
+  output = ""
