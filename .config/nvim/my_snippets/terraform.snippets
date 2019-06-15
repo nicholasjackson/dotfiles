@@ -1,0 +1,41 @@
+snippet var_firewall "Firewall rules variable"
+variable "firewall_rules" {
+	default = [
+		{
+			protocol         = "tcp"
+			port_range       = "22"
+			source_addresses = ["0.0.0.0/0", "::/0"]
+		},
+		{
+			protocol         = "tcp"
+			port_range       = "80"
+			source_addresses = ["0.0.0.0/0", "::/0"]
+		},
+		{
+			protocol         = "tcp"
+			port_range       = "443"
+			source_addresses = ["0.0.0.0/0", "::/0"]
+		}
+	]
+}
+endsnippet
+
+snippet firewall_block "Firewall rules variable"
+dynamic "inbound_rule" {
+	for_each = var.firewall_rules
+
+	/*
+	for_each = [for r in var.firewall_rules : {
+		protocol         = trimspace(r.protocol)
+		port_range       = r.port_range
+		source_addresses = r.source_addresses
+	}]
+	*/
+
+	content {
+		protocol         = inbound_rule.value.protocol
+		port_range       = inbound_rule.value.port_range
+		source_addresses = inbound_rule.value.source_addresses
+	}
+}
+endsnippet

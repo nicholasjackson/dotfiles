@@ -25,6 +25,7 @@ Plugin 'juliosueiras/vim-terraform-completion'
 " themes
 Plugin 'arcticicestudio/nord-vim'
 Plugin 'albertorestifo/github.vim'
+Plugin 'haishanh/night-owl.vim'
 
 " Highlight indent
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -51,6 +52,9 @@ Plugin 'tpope/vim-git.git'
 " Super tab
 Plugin 'ervandew/supertab'
 
+" Deoplete
+Plugin 'Shougo/deoplete.nvim'
+
 " Syntax checking
 Plugin 'vim-syntastic/syntastic'
 
@@ -65,6 +69,9 @@ Plugin 'itspriddle/vim-marked'
 
 " Utility
 Plugin 'vim-scripts/SyntaxAttr.vim'
+
+" Snippets
+Plugin 'SirVer/ultisnips'
 
 call vundle#end() " required
 
@@ -113,6 +120,14 @@ set clipboard=unnamedplus
 " Supertab start at top
 let g:SuperTabDefaultCompletionType = "context"
 
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 0
+
+call deoplete#custom#option('omni_patterns', {
+\ 'go': '[^. *\t]\.\w*',
+\})
+
 " Make sure that cursor is always vertically centered on j/k moves
 set so=999
 
@@ -120,7 +135,15 @@ set so=999
 set colorcolumn=80,120
 
 syntax on
-colorscheme nord
+"colorscheme nord
+colorscheme night-owl
+
+" Override Night Owl Defaults
+hi Normal guibg=#2E3440 ctermbg=NONE
+hi EndOfBuffer guibg=#2E3440 ctermbg=NONE
+hi LineNr ctermfg=8 guifg=#4C566A guibg=#2E3440 ctermbg=NONE
+hi Pmenu guifg=white ctermfg=white
+hi PmenuSel guibg=gray ctermbg=gray guifg=black ctermfg=black
 
 " Indent guide
 let g:indent_guides_enable_on__startup = 1
@@ -398,3 +421,14 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 hi Comment ctermfg=Grey
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTreeToggle | endif
+
+" Snippets
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-a>"
+let g:UltiSnipsJumpForwardTrigger="<c-c>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetDirectories=["my_snippets"]

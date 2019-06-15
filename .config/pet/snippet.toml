@@ -25,3 +25,13 @@
   description = "FFMPEG create animated gif"
   command = "ffmpeg -y -i <filename> -i palette.png -filter_complex paletteuse -r <frames_per_s> <output>"
   output = ""
+
+[[snippets]]
+  description = "Create Secret for Ambassador Origin Certs"
+  command = "$ kubectl create secret tls ambassador-certs --cert=origin.crt --key=./origin.key"
+  output = ""
+
+[[snippets]]
+  description = "Scan ip range for connected devices"
+  command = "nmap -sn <range>/24"
+  output = ""
