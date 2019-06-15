@@ -94,6 +94,8 @@ set cursorline
 
 " Completion options (select longest + show menu even if a single match is found)
 set completeopt=longest,menuone
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+let g:SuperTabDefaultCompletionType = "context"
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
