@@ -27,6 +27,7 @@ Plugin 'juliosueiras/vim-terraform-completion'
 " themes
 Plugin 'arcticicestudio/nord-vim'
 Plugin 'albertorestifo/github.vim'
+Plugin 'sonph/onehalf', {'rtp': 'vim/'}
 
 " Highlight indent
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -39,13 +40,13 @@ Plugin 'lambdalisue/vim-gista'
 
 " Autocomplete
 Plugin 'Shougo/deoplete.nvim'
-Plugin 'zchee/deoplete-go'
 
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
 
 " Status bar
-Plugin 'itchyny/lightline.vim'
+Plugin 'vim-airline/vim-airline'
+"Plugin 'itchyny/lightline.vim'
 
 " Ack file searcher
 Plugin 'mileszs/ack.vim'
@@ -57,8 +58,11 @@ Plugin 'tpope/vim-git.git'
 " Super tab
 Plugin 'ervandew/supertab'
 
+Plugin 'christoomey/vim-tmux-navigator'
+
+
 " Syntax checking
-Plugin 'vim-syntastic/syntastic'
+"Plugin 'vim-syntastic/syntastic'
 "Plugin 'w0rp/ale'
 
 " Fix indentation
@@ -112,7 +116,7 @@ set whichwrap+=<,>,h,l
 
 " Text formatting
 "set anti enc=utf-8
-set guifont=Hack
+"set guifont=Hack
 set sw=2
 set ts=2
 set softtabstop=2
@@ -127,43 +131,56 @@ set so=999
 set colorcolumn=80,120
 
 syntax on
-colorscheme nord
-" Indent guide
-let g:indent_guides_enable_on__startup = 1
-let g:indent_guides_auto_colors        = 1
-hi IndentGuidesOdd  ctermbg            = 236
-hi IndentGuidesEven ctermbg            = 235
+
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+"colorscheme onehalflight
+colorscheme onehalfdark
+
+let g:airline_theme='onehalfdark'
+let g:airline_powerline_fonts = 1
+
+"colorscheme nord
+"" Indent guide
+"let g:indent_guides_enable_on__startup = 1
+"let g:indent_guides_auto_colors        = 1
+"hi IndentGuidesOdd  ctermbg            = 236
+"hi IndentGuidesEven ctermbg            = 235
 
 " -------   Go IDE -----------------------------
-let g:go_highlight_functions         = 1
-let g:go_highlight_methods           = 1
-let g:go_highlight_fields            = 1
-let g:go_highlight_types             = 1
-let g:go_highlight_operators         = 1
-let g:go_highlight_build_constraints = 1
-let g:go_fmt_command                 = "goimports"
-let g:go_def_mapping_enabled         = 1
-let g:go_auto_type_info              = 0
-let g:go_term_enabled                = 1
-let g:go_info_mode                   = 'guru'
-let g:go_gocode_autobuild            = 1
-let go_gocode_propose_source         = 0
-let g:go_metalinter_deadline = "20s"
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-let g:go_def_mode = "gopls"
-"    \ 'deadcode',
-"    \ 'errcheck',
-"    \ 'gas',
-"    \ 'goconst',
-"    \ 'gocyclo',
-"    \ 'golint',
-"    \ 'gosimple',
-"    \ 'ineffassign',
-"    \ 'vet',
-"    \ 'vetshadow'
-"    \]
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+"let g:go_highlight_functions         = 1
+"let g:go_highlight_methods           = 1
+"let g:go_highlight_fields            = 1
+"let g:go_highlight_types             = 1
+"let g:go_highlight_operators         = 1
+"let g:go_highlight_build_constraints = 1
+"let g:go_fmt_command                 = "goimports"
+"let g:go_def_mapping_enabled         = 1
+"let g:go_auto_type_info              = 0
+"let g:go_term_enabled                = 1
+"let g:go_info_mode                   = 'guru'
+"let g:go_gocode_autobuild            = 1
+"let go_gocode_propose_source         = 0
+"let g:go_metalinter_deadline = "20s"
+"let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+"let g:go_def_mode = "gopls"
+""    \ 'deadcode',
+""    \ 'errcheck',
+""    \ 'gas',
+""    \ 'goconst',
+""    \ 'gocyclo',
+""    \ 'golint',
+""    \ 'gosimple',
+""    \ 'ineffassign',
+""    \ 'vet',
+""    \ 'vetshadow'
+""    \]
+"let g:go_metalinter_autosave = 1
+"let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 
 " wrap long lines in quickfix
 augroup quickfix
@@ -218,24 +235,19 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-"------------------------------------------------------------------------------
-" NeoComplete
-"------------------------------------------------------------------------------
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-
 set timeoutlen=400 ttimeoutlen=0
 
 " Deoplete
 "
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#omni_patterns = {}
+call deoplete#custom#option('omni_patterns', {
+\ 'go': '[^. *\t]\.\w*',
+\})
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
@@ -246,101 +258,96 @@ else
 endif
 
 " ------------------------ lightbar settings ---------------------------
-set laststatus=2
-let g:lightline = {
-      \ 'colorscheme': 'nord',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'filename' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ], 
-      \              [ 'linter_warnings', 'linter_errors', 'linter_ok' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'LightLineFugitive',
-      \   'readonly': 'LightLineReadonly',
-      \   'modified': 'LightLineModified',
-      \   'filename': 'LightLineFilename',
-      \ },
-      \ 'component_expand': {
-      \   'linter_warnings': 'LightlineLinterWarnings',
-      \   'linter_errors': 'LightlineLinterErrors',
-      \   'linter_ok': 'LightlineLinterOK'
-      \ },
-      \ 'component_type': {
-      \   'linter_warnings': 'warning',
-      \   'linter_errors': 'error',
-      \   'linter_ok': 'ok',
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
-      \ }
-
-function! LightLineModified()
-    if &filetype == "help"
-        return ""
-    elseif &modified
-        return "+"
-    elseif &modifiable
-        return ""
-    else
-        return ""
-    endif
-endfunction
-
-function! LightLineReadonly()
-    if &filetype == "help"
-        return ""
-    elseif &readonly
-        return ''
-    else
-        return ""
-    endif
-endfunction
-
-function! LightLineFugitive()
-    if exists("*fugitive#head")
-        let branch = fugitive#head()
-       return branch !=# '' ? ' '.branch : ''
-    endif
-    return ''
-endfunction
-
-function! LightLineFilename()
-    return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-           \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-           \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-endfunction
-
-autocmd User ALELint call lightline#update()
-
-" ale + lightline
-function! LightlineLinterWarnings() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d --', all_non_errors)
-endfunction
-
-function! LightlineLinterErrors() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d >>', all_errors)
-endfunction
-
-function! LightlineLinterOK() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '✓' : ''
-endfunction
-
-function! s:syntastic()
-  SyntasticCheck
-    call lightline#update()
-endfunction
+"set laststatus=2
+"let g:lightline = {
+"      \ 'colorscheme': 'nord',
+"      \ 'active': {
+"      \   'left': [ [ 'mode', 'paste' ],
+"      \             [ 'fugitive', 'filename' ] ],
+"      \   'right': [ [ 'lineinfo' ],
+"      \              [ 'percent' ], 
+"      \              [ 'linter_warnings', 'linter_errors', 'linter_ok' ],
+"      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+"      \ },
+"      \ 'component_function': {
+"      \   'fugitive': 'LightLineFugitive',
+"      \   'readonly': 'LightLineReadonly',
+"      \   'modified': 'LightLineModified',
+"      \   'filename': 'LightLineFilename',
+"      \ },
+"      \ 'component_expand': {
+"      \   'linter_warnings': 'LightlineLinterWarnings',
+"      \   'linter_errors': 'LightlineLinterErrors',
+"      \   'linter_ok': 'LightlineLinterOK'
+"      \ },
+"      \ 'component_type': {
+"      \   'linter_warnings': 'warning',
+"      \   'linter_errors': 'error',
+"      \   'linter_ok': 'ok',
+"      \ },
+"      \ 'separator': { 'left': '', 'right': '' },
+"      \ 'subseparator': { 'left': '', 'right': '' }
+"      \ }
+"
+"function! LightLineModified()
+"    if &filetype == "help"
+"        return ""
+"    elseif &modified
+"        return "+"
+"    elseif &modifiable
+"        return ""
+"    else
+"        return ""
+"    endif
+"endfunction
+"
+"function! LightLineReadonly()
+"    if &filetype == "help"
+"        return ""
+"    elseif &readonly
+"        return ''
+"    else
+"        return ""
+"    endif
+"endfunction
+"
+"function! LightLineFugitive()
+"    if exists("*fugitive#head")
+"        let branch = fugitive#head()
+"       return branch !=# '' ? ' '.branch : ''
+"    endif
+"    return ''
+"endfunction
+"
+"function! LightLineFilename()
+"    return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+"           \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+"           \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+"endfunction
+"
+"autocmd User ALELint call lightline#update()
+"
+"" ale + lightline
+"function! LightlineLinterWarnings() abort
+"  let l:counts = ale#statusline#Count(bufnr(''))
+"  let l:all_errors = l:counts.error + l:counts.style_error
+"  let l:all_non_errors = l:counts.total - l:all_errors
+"  return l:counts.total == 0 ? '' : printf('%d --', all_non_errors)
+"endfunction
+"
+"function! LightlineLinterErrors() abort
+"  let l:counts = ale#statusline#Count(bufnr(''))
+"  let l:all_errors = l:counts.error + l:counts.style_error
+"  let l:all_non_errors = l:counts.total - l:all_errors
+"  return l:counts.total == 0 ? '' : printf('%d >>', all_errors)
+"endfunction
+"
+"function! LightlineLinterOK() abort
+"  let l:counts = ale#statusline#Count(bufnr(''))
+"  let l:all_errors = l:counts.error + l:counts.style_error
+"  let l:all_non_errors = l:counts.total - l:all_errors
+"  return l:counts.total == 0 ? '✓' : ''
+"endfunction
 
 " ================  Ctrl P settings ===========================
 let g:ctrlp_max_files    = 10000
@@ -416,10 +423,6 @@ let g:python_host_prog  = '/usr/local/bin/python2'
 " Skip the check of neovim module
 let g:python3_host_skip_check = 0
 
-" Run deoplete.nvim automatically
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
-
 " React
 let g:jsx_ext_required = 0
 
@@ -441,16 +444,14 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 let g:gista#client#default_username = 'nicholasjackson'
 
 " Terraform
-let g:syntastic_terraform_tffilter_plan = 1
-let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-let g:terraform_completion_keys = 0
-let g:terraform_registry_module_completion = 0
-let g:terraform_fmt_on_save = 1
+"let g:syntastic_terraform_tffilter_plan = 1
+"let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
+"let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
+"let g:terraform_completion_keys = 0
+"let g:terraform_registry_module_completion = 0
+"let g:terraform_fmt_on_save = 1
 
 " HCL
 au BufRead,BufNewFile *.hcl setlocal filetype=terraform
 
-hi Comment ctermfg=Grey
-
-call deoplete#initialize()
+"hi Comment ctermfg=Grey
