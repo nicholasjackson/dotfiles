@@ -15,14 +15,10 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'mxw/vim-jsx'
 Plugin 'pangloss/vim-javascript'
-Plugin 'keith/swift.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jparise/vim-graphql'
-Plugin 'rust-lang/rust.vim'
 Plugin 'hashicorp/sentinel.vim'
-Plugin 'dart-lang/dart-vim-plugin'
-"Plugin 'erikzaadi/vim-ansible-yaml'
 
 " Terraform
 Plugin 'hashivim/vim-terraform'
@@ -42,12 +38,8 @@ Plugin 'neomake/neomake'
 Plugin 'lambdalisue/vim-gista'
 
 " Autocomplete
-Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'zchee/deoplete-go'
-Plugin 'mitsuse/autocomplete-swift'
-Plugin 'sebastianmarkow/deoplete-rust'
-Plugin 'villainy/deoplete-dart'
 
 " NerdTree explorer
 Plugin 'scrooloose/nerdtree'
@@ -156,10 +148,9 @@ let g:go_term_enabled                = 1
 let g:go_info_mode                   = 'guru'
 let g:go_gocode_autobuild            = 1
 let go_gocode_propose_source         = 0
-
-" gometalinter configuration
 let g:go_metalinter_deadline = "20s"
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_def_mode = "gopls"
 "    \ 'deadcode',
 "    \ 'errcheck',
 "    \ 'gas',
@@ -365,6 +356,12 @@ let g:mapleader = ","
 
 " Open Ack and put the cursor in the right position
 map <leader>a :Ack<space>
+highlight Cursor guifg=white guibg=black
+highlight iCursor guifg=white guibg=steelblue 
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkwait10
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
@@ -430,7 +427,7 @@ let g:jsx_ext_required = 0
 let g:syntastic_javascript_checkers = ['eslint', 'jshint']
 
 " YAML
-let g:syntastic_yaml_checkers = ['yamllint']
+" let g:syntastic_yaml_checkers = ['yamllint']
 
 " Markdown
 let g:vim_markdown_folding_disabled = 1
@@ -453,13 +450,6 @@ let g:terraform_fmt_on_save = 1
 
 " HCL
 au BufRead,BufNewFile *.hcl setlocal filetype=terraform
-
-" Ansible
-au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
-
-" Swift
-autocmd BufNewFile,BufRead *.swift set filetype=swift
-let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 
 hi Comment ctermfg=Grey
 

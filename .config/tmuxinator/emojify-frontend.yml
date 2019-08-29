@@ -1,7 +1,7 @@
 # ~/.tmuxinator/emojify-frontend
 
 name: emojify-frontend
-root: ~/Developer/go/src/github.com/nicholasjackson/emojify-frontend
+root: ~/Developer/go/src/github.com/emojify-app/frontend
 
 windows:
   - editor:
