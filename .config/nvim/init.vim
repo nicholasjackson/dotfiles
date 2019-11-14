@@ -22,11 +22,9 @@ Plugin 'hashicorp/sentinel.vim'
 
 " Terraform
 Plugin 'hashivim/vim-terraform'
-Plugin 'juliosueiras/vim-terraform-completion'
+"Plugin 'juliosueiras/vim-terraform-completion'
 
 " themes
-Plugin 'arcticicestudio/nord-vim'
-Plugin 'albertorestifo/github.vim'
 Plugin 'sonph/onehalf', {'rtp': 'vim/'}
 
 " Highlight indent
@@ -46,7 +44,6 @@ Plugin 'scrooloose/nerdtree'
 
 " Status bar
 Plugin 'vim-airline/vim-airline'
-"Plugin 'itchyny/lightline.vim'
 
 " Ack file searcher
 Plugin 'mileszs/ack.vim'
@@ -62,7 +59,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 
 
 " Syntax checking
-"Plugin 'vim-syntastic/syntastic'
+Plugin 'vim-syntastic/syntastic'
 "Plugin 'w0rp/ale'
 
 " Fix indentation
@@ -151,36 +148,41 @@ let g:airline_powerline_fonts = 1
 "hi IndentGuidesOdd  ctermbg            = 236
 "hi IndentGuidesEven ctermbg            = 235
 
-" -------   Go IDE -----------------------------
-"let g:go_highlight_functions         = 1
-"let g:go_highlight_methods           = 1
-"let g:go_highlight_fields            = 1
-"let g:go_highlight_types             = 1
-"let g:go_highlight_operators         = 1
-"let g:go_highlight_build_constraints = 1
-"let g:go_fmt_command                 = "goimports"
-"let g:go_def_mapping_enabled         = 1
-"let g:go_auto_type_info              = 0
-"let g:go_term_enabled                = 1
-"let g:go_info_mode                   = 'guru'
-"let g:go_gocode_autobuild            = 1
-"let go_gocode_propose_source         = 0
-"let g:go_metalinter_deadline = "20s"
-"let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-"let g:go_def_mode = "gopls"
-""    \ 'deadcode',
-""    \ 'errcheck',
-""    \ 'gas',
-""    \ 'goconst',
-""    \ 'gocyclo',
-""    \ 'golint',
-""    \ 'gosimple',
-""    \ 'ineffassign',
-""    \ 'vet',
-""    \ 'vetshadow'
-""    \]
-"let g:go_metalinter_autosave = 1
-"let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+" ==================== vim-go ====================
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_command = "goimports"
+let g:go_debug_windows = {
+      \ 'vars':  'leftabove 35vnew',
+      \ 'stack': 'botright 10new',
+\ }
+
+let g:go_test_prepend_name = 1
+let g:go_list_type = "quickfix"
+let g:go_auto_type_info = 0
+let g:go_auto_sameids = 0
+
+let g:go_null_module_warning = 0
+let g:go_echo_command_info = 1
+
+let g:go_autodetect_gopath = 1
+
+let g:go_metalinter_autosave=1
+let g:go_metalinter_autosave_enabled=['golint', 'govet', 'typecheck']
+let g:go_metalinter_command='golangci-lint'
+
+let g:go_highlight_space_tab_error = 0
+let g:go_highlight_array_whitespace_error = 0
+let g:go_highlight_trailing_whitespace_error = 0
+let g:go_highlight_extra_types = 0
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_types = 0
+let g:go_highlight_operators = 1
+let g:go_highlight_format_strings = 0
+let g:go_highlight_function_calls = 0
+let g:go_gocode_propose_source = 1
+
+let g:go_modifytags_transform = 'camelcase'
+let g:go_fold_enable = []
 
 " wrap long lines in quickfix
 augroup quickfix
@@ -241,11 +243,10 @@ set timeoutlen=400 ttimeoutlen=0
 "
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('omni_patterns', {
+\ 'complete_method': 'omnifunc',
 \ 'go': '[^. *\t]\.\w*',
 \})
 
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
@@ -256,98 +257,6 @@ if has("win16") || has("win32")
 else
     set wildignore+=.git\*,.hg\*,.svn\*
 endif
-
-" ------------------------ lightbar settings ---------------------------
-"set laststatus=2
-"let g:lightline = {
-"      \ 'colorscheme': 'nord',
-"      \ 'active': {
-"      \   'left': [ [ 'mode', 'paste' ],
-"      \             [ 'fugitive', 'filename' ] ],
-"      \   'right': [ [ 'lineinfo' ],
-"      \              [ 'percent' ], 
-"      \              [ 'linter_warnings', 'linter_errors', 'linter_ok' ],
-"      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-"      \ },
-"      \ 'component_function': {
-"      \   'fugitive': 'LightLineFugitive',
-"      \   'readonly': 'LightLineReadonly',
-"      \   'modified': 'LightLineModified',
-"      \   'filename': 'LightLineFilename',
-"      \ },
-"      \ 'component_expand': {
-"      \   'linter_warnings': 'LightlineLinterWarnings',
-"      \   'linter_errors': 'LightlineLinterErrors',
-"      \   'linter_ok': 'LightlineLinterOK'
-"      \ },
-"      \ 'component_type': {
-"      \   'linter_warnings': 'warning',
-"      \   'linter_errors': 'error',
-"      \   'linter_ok': 'ok',
-"      \ },
-"      \ 'separator': { 'left': '', 'right': '' },
-"      \ 'subseparator': { 'left': '', 'right': '' }
-"      \ }
-"
-"function! LightLineModified()
-"    if &filetype == "help"
-"        return ""
-"    elseif &modified
-"        return "+"
-"    elseif &modifiable
-"        return ""
-"    else
-"        return ""
-"    endif
-"endfunction
-"
-"function! LightLineReadonly()
-"    if &filetype == "help"
-"        return ""
-"    elseif &readonly
-"        return ''
-"    else
-"        return ""
-"    endif
-"endfunction
-"
-"function! LightLineFugitive()
-"    if exists("*fugitive#head")
-"        let branch = fugitive#head()
-"       return branch !=# '' ? ' '.branch : ''
-"    endif
-"    return ''
-"endfunction
-"
-"function! LightLineFilename()
-"    return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-"           \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-"           \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-"endfunction
-"
-"autocmd User ALELint call lightline#update()
-"
-"" ale + lightline
-"function! LightlineLinterWarnings() abort
-"  let l:counts = ale#statusline#Count(bufnr(''))
-"  let l:all_errors = l:counts.error + l:counts.style_error
-"  let l:all_non_errors = l:counts.total - l:all_errors
-"  return l:counts.total == 0 ? '' : printf('%d --', all_non_errors)
-"endfunction
-"
-"function! LightlineLinterErrors() abort
-"  let l:counts = ale#statusline#Count(bufnr(''))
-"  let l:all_errors = l:counts.error + l:counts.style_error
-"  let l:all_non_errors = l:counts.total - l:all_errors
-"  return l:counts.total == 0 ? '' : printf('%d >>', all_errors)
-"endfunction
-"
-"function! LightlineLinterOK() abort
-"  let l:counts = ale#statusline#Count(bufnr(''))
-"  let l:all_errors = l:counts.error + l:counts.style_error
-"  let l:all_non_errors = l:counts.total - l:all_errors
-"  return l:counts.total == 0 ? '✓' : ''
-"endfunction
 
 " ================  Ctrl P settings ===========================
 let g:ctrlp_max_files    = 10000
@@ -406,17 +315,6 @@ let g:deoplete#sources#rust#rust_source_path='/uslocal/Cellar/rust/1.20.0/lib/ru
 " Dart
 let g:deoplete#sources#dart#dart_sdk_path='/Users/nicj/dart-sdk/'
 
-" Terraform
-
-"augroup filetypedetect
-"  au BufRead,BufNewFile *.hcl set filetype=terraform
-"augroup END
-
-"augroup filetypedetect
-"  au BufRead,BufNewFile *.nomad set filetype=terraform
-"augroup END
-
-
 " Path to python interpreter for neovim
 let g:python3_host_prog  = '/usr/local/bin/python3'
 let g:python_host_prog  = '/usr/local/bin/python2'
@@ -430,7 +328,7 @@ let g:jsx_ext_required = 0
 let g:syntastic_javascript_checkers = ['eslint', 'jshint']
 
 " YAML
-" let g:syntastic_yaml_checkers = ['yamllint']
+let g:syntastic_yaml_checkers = ['yamllint']
 
 " Markdown
 let g:vim_markdown_folding_disabled = 1
@@ -444,14 +342,14 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 let g:gista#client#default_username = 'nicholasjackson'
 
 " Terraform
-"let g:syntastic_terraform_tffilter_plan = 1
-"let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-"let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-"let g:terraform_completion_keys = 0
+"let g:terraform_completion_keys = 1
 "let g:terraform_registry_module_completion = 0
-"let g:terraform_fmt_on_save = 1
 
-" HCL
-au BufRead,BufNewFile *.hcl setlocal filetype=terraform
+let g:terraform_align=1
 
-"hi Comment ctermfg=Grey
+" HCL 
+augroup filetypedetect
+  au! BufRead,BufNewFile *.hcl setf terraform
+augroup END
+
+call deoplete#initialize()
